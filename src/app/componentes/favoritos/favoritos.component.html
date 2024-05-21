@@ -1,0 +1,10 @@
+@for (item of negocios-favoritos; track $index) {
+<div class="card" style="width: 18rem;">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxaV0uk7HCVE-cyWYEf2yTLAEu0LH3rCFkWI5JpWV0EA&s" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{item.nombreNegocio}}</h5>
+      <p class="card-text">{{item.calificacion}}</p>
+      <a routerLink="detalle-negocio{{item.id}}" class="btn btn-primary">Ver</a>
+    </div>
+  </div>
+}
