@@ -25,7 +25,7 @@ export class CrearNegocioComponent {
 
   public crearNegocio() {
     this.registroNegocioDTO.horarios = this.horarios;
-    this.negocioService.crear(this.registroNegocioDTO);
+    //this.negocioService.crear(this.registroNegocioDTO);
 
     console.log(this.registroNegocioDTO);
   }

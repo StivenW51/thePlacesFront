@@ -1,5 +1,6 @@
 import { Horario } from "../entidades/horario";
 import { Ubicacion } from "../entidades/ubicacion";
+
 export class RegistroNegocioDTO {
 
     constructor(

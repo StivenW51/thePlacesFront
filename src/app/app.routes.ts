@@ -6,9 +6,10 @@ import { RegistroClienteComponent } from './componentes/registro-cliente/registr
 import { GestionNegociosComponent } from './componentes/gestion-negocios/gestion-negocios.component';
 import { CrearNegocioComponent } from './componentes/crear-negocio/crear-negocio.component';
 import { DetalleNegocioComponent } from './componentes/detalle-negocio/detalle-negocio.component';
+
 export const routes: Routes = [
 { path: 'header', component: HeaderComponent},
-{ path: '', component: InicioComponent },
+{ path: 'inicio', component: InicioComponent },
 { path: 'login', component: LoginComponent },
 { path: 'registro-cliente', component: RegistroClienteComponent },
 { path: 'gestion-negocios', component: GestionNegociosComponent},

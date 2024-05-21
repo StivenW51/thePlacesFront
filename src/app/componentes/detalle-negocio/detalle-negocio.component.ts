@@ -28,7 +28,7 @@ export class DetalleNegocioComponent {
     const negocioConsultado = this.negocioService.obtener(this.codigoNegocio);
 
     if (negocioConsultado != undefined) {
-      this.negocio = negocioConsultado;
+      //this.negocio = negocioConsultado;
     }
   }
 }

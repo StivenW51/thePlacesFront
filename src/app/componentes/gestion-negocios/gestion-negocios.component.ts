@@ -1,48 +1,48 @@
+
 import { Component } from '@angular/core';
-import { ItemNegocioDTO } from '../../dto/item-negocio-dto';
+import { DetalleNegocioDTO } from '../../dto/detalle-negocio-dto';
 import { NegociosService } from '../../Servicios/negocios.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { TokenService } from '../../Servicios/token.service';
 
 @Component({
   selector: 'app-gestion-negocios',
   standalone: true,
   imports: [FormsModule, CommonModule, RouterModule],
   templateUrl: './gestion-negocios.component.html',
-  styleUrl: './gestion-negocios.component.css'
+  styleUrls: ['./gestion-negocios.component.css']
 })
 export class GestionNegociosComponent {
 
-  negocios: ItemNegocioDTO[];
-  seleccionados: ItemNegocioDTO[];
+  negocios: DetalleNegocioDTO[] = [];
+  seleccionados: DetalleNegocioDTO[] = [];
   textoBtnEliminar: string = '';
+  idCliente: string = '';
 
-  constructor(private negocioService: NegociosService) {
-    this.negocios = [];
-    this.listarNegocios();
-    this.seleccionados = [];
-    this.textoBtnEliminar = '';
-
+  constructor(private negocioService: NegociosService, private tokenService: TokenService) {
+    this.idCliente = '';
+    //this.listarNegocios();
+    this.listarNegociosActivos();
   }
 
-  public seleccionar(producto: ItemNegocioDTO, estado: boolean) {
+  public seleccionar(producto: DetalleNegocioDTO, estado: boolean) {
     if (estado) {
       this.seleccionados.push(producto);
     } else {
-      this.seleccionados.splice(this.seleccionados.indexOf(producto), 1);
+      const index = this.seleccionados.indexOf(producto);
+      if (index !== -1) {
+        this.seleccionados.splice(index, 1);
+      }
     }
     this.actualizarMensaje();
   }
 
   private actualizarMensaje() {
     const tam = this.seleccionados.length;
-    if (tam != 0) {
-      if (tam == 1) {
-        this.textoBtnEliminar = "1 elemento";
-      } else {
-        this.textoBtnEliminar = tam + " elementos";
-      }
+    if (tam !== 0) {
+      this.textoBtnEliminar = tam === 1 ? "1 elemento" : `${tam} elementos`;
     } else {
       this.textoBtnEliminar = "";
     }
@@ -50,15 +50,38 @@ export class GestionNegociosComponent {
 
   public borrarNegocios() {
     this.seleccionados.forEach(n => {
-    this.negocioService.eliminar(n.id);
-    this.negocios = this.negocios.filter(negocio => negocio.id !== n.id);
+      this.negocioService.eliminar(n.id).subscribe(() => {
+        this.negocios = this.negocios.filter(negocio => negocio.id !== n.id);
+      });
     });
     this.seleccionados = [];
     this.actualizarMensaje();
-    }
-
-  public listarNegocios() {
-    this.negocios = this.negocioService.listar();
   }
 
+
+  public listarNegocios() {
+    const values = this.tokenService.decodePayload(this.tokenService.getToken());
+    this.idCliente = values['id']; // saca el id del cliente
+
+    this.negocioService.listarNegociosPropietario(this.idCliente).subscribe({
+      next: (data) => {
+        this.negocios = data.respuesta;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+
+  public listarNegociosActivos() {
+    this.negocioService.listarNegociosActivos().subscribe({
+      next: (data) => {
+        this.negocios = data.respuesta;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
 }
+
