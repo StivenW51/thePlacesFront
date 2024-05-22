@@ -4,6 +4,8 @@ import { NegociosService } from '../../Servicios/negocios.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Horario } from '../../entidades/horario';
+import { UbicacionNegocioDTO } from '../../dto/ubicacion-negocio-dto';
+import { MapaService } from '../../Servicios/mapa.service';
 
 
 @Component({
@@ -18,9 +20,13 @@ export class CrearNegocioComponent {
   horarios: Horario[];
   archivos!: FileList;
 
-  constructor(private negocioService: NegociosService){
+  marcador: any;
+
+  constructor(private negocioService: NegociosService, private mapaService: MapaService) {
     this.registroNegocioDTO = new RegistroNegocioDTO();
     this.horarios = [new Horario()];
+    //this.marcador = new UbicacionNegocioDTO();
+    this.marcador = null;
   }
 
   public crearNegocio() {
@@ -30,14 +36,22 @@ export class CrearNegocioComponent {
     console.log(this.registroNegocioDTO);
   }
 
-  public agregarHorario(){
+  public agregarHorario() {
     this.horarios.push(new Horario());
   }
-  public onFileChange(event:any){
-    if(event.target.files.length>0){
+  public onFileChange(event: any) {
+    if (event.target.files.length > 0) {
       this.archivos = event.target.files;
       this.registroNegocioDTO.imagenes[1] = this.archivos[0].name;
     }
+  }
+
+  ngOnInit(): void {
+    this.mapaService.crearMapa();
+    this.mapaService.agregarMarcador().subscribe((marcador) => {
+      this.registroNegocioDTO.ubicacion.latitud = marcador.lat;
+      this.registroNegocioDTO.ubicacion.longitud = marcador.lng;
+    });
   }
 
 }

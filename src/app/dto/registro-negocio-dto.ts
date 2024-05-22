@@ -1,5 +1,6 @@
 import { Horario } from "../entidades/horario";
 import { Ubicacion } from "../entidades/ubicacion";
+import { UbicacionNegocioDTO } from "./ubicacion-negocio-dto";
 
 export class RegistroNegocioDTO {
 
@@ -8,7 +9,7 @@ export class RegistroNegocioDTO {
         public nombreNegocio: string='',
         public imagenes: string[] = [],
         public tipoNegocio: string = '',
-        public ubicacion: string = '',
+        public ubicacion: UbicacionNegocioDTO = new UbicacionNegocioDTO(),
         public direccion: string ='',
         public telefonos: string[] = [],
         public calificacion: string = '',

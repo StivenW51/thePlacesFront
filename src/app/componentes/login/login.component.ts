@@ -1,17 +1,18 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router'; // Importa el servicio Router
+import { Router, RouterModule } from '@angular/router'; // Importa el servicio Router
 import { InicioSesionDTO } from '../../dto/inicio-sesion-dto';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../Servicios/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { TokenService } from '../../Servicios/token.service';
+import { routes } from '../../app.routes';
 
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
