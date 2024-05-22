@@ -24,24 +24,27 @@ export class LoginComponent {
 
   constructor(private authService: AuthService,
     private router: Router // Inyecta el servicio Router
-  ){
+  ) {
     this.inicioSesion = new InicioSesionDTO();
     this.authServices = authService;
     this.tokenService = new TokenService();
   }
 
 
-  IniciarSesion() {
-    this.authService.loginCliente(this.inicioSesion).subscribe(
-      response => {      
+  Login() {
+    this.authService.login(this.inicioSesion).subscribe(
+      response => {
         if (response.respuesta) {
           console.log(response);
-          this.tokenService.setToken(response.respuesta.token)
-          //alert(response.respuesta);
-          this.router.navigate(['/gestion-negocios']);
+          this.tokenService.setToken(response.respuesta.token);
+
+          if (this.tokenService.getRole() == "CLIENTE") {
+            this.router.navigate(['/gestion-negocios']);
+          }
+          else if(this.tokenService.getRole() == "MODERADOR"){
+            this.router.navigate(['/negocios-pendientes']);
+          }
         } else {
-          //this.router.navigate(['/gestion-negocios']); 
-          // Redirecciona al usuario al componente de inicio quedA PENDIENTE
           console.error('ok');
         }
       },
@@ -51,9 +54,6 @@ export class LoginComponent {
       }
     );
   }
-
-  
-  
 }
 
 

@@ -1,7 +1,11 @@
-import { Component } from '@angular/core';
-import { RegistroClienteDTO } from '../../dto/registro-cliente-dto';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule } from "@angular/common";
+import { Component } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { RegistroClienteDTO } from "../../dto/registro-cliente-dto";
+import { ClienteService } from "../../Servicios/cliente.service";
+import { Router } from "@angular/router";
+
+
 
 @Component({
   selector: 'app-registro-cliente',
@@ -15,26 +19,46 @@ export class RegistroClienteComponent {
   registroClienteDTO: RegistroClienteDTO;
   ciudades: string[];
   archivos! : FileList;
+  confirmarPassword: string;
+  telefonos: string;
 
-  constructor() {
+  constructor(private clienteServicio: ClienteService, private router: Router) {
     this.registroClienteDTO = new RegistroClienteDTO();
     this.ciudades = [];
     this.cargarCiudades();
+    this.confirmarPassword = "";    
+    this.telefonos = "";
   }
 
   public registrar() {
+
     if (this.registroClienteDTO.fotoPerfil != ""){
       console.log(this.registroClienteDTO);
+      this.registroClienteDTO.favoritos = [];
+
+      if(this.telefonos.includes(',')){
+        this.registroClienteDTO.telefono = this.telefonos.split(',');
+      }
+      else{
+        this.registroClienteDTO.telefono = [this.telefonos];
+      }
+
+      const reg = this.clienteServicio.registrarCliente(this.registroClienteDTO);
+      //confirm("Cliente registrado exitosamente");
+      console.log(reg);
+      this.router.navigate(['/login']);
+
     }else{
-      console.log("Debe cargar una foto");
-      
+      console.log("Debe cargar una foto");      
     }
-    
+
+
+
   }
 
   public sonIguales(): boolean {
-    return this.registroClienteDTO.password == this.registroClienteDTO.confirmarPassword;
-    }
+    return this.registroClienteDTO.password == this.confirmarPassword;
+  }
 
   private cargarCiudades(){
     this.ciudades = ["Bogotá", "Medellín", "Cali", "Barranquilla", "Cartagena"];

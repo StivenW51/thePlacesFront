@@ -6,24 +6,20 @@
                     <h5 class="mb-0"><i class="fa-solid fa-user-plus me-3"></i>Registro de un nuevo cliente</h5>
                 </div>
                 <div class="card-body p-4">
-                    <form #f="ngForm" (ngSubmit)="registrar()">
+                    <form #Registro="ngForm" (ngSubmit)="registrar()">
+                        <div class="mb-3">
+                            <label class="form-label">Cedula: </label>
+                            <input #cedula="ngModel" class="form-control" [ngClass]="cedula.invalid && cedula.dirty ? 'is-invalid' : ''" type="text" name="cedula"[(ngModel)]="registroClienteDTO.cedula" required maxlength="100" />                            
+                        </div>
+                        
                         <div class="mb-3">
                             <label class="form-label">Nombre: </label>
-                            <input #nombre="ngModel" class="form-control" [ngClass]="nombre.invalid && nombre.dirty ? 'is-invalid' : ''" type="text" name="nombre"[(ngModel)]="registroClienteDTO.nombre" required maxlength="100" />
-                            
+                            <input #nombre="ngModel" class="form-control" [ngClass]="nombre.invalid && nombre.dirty ? 'is-invalid' : ''" type="text" name="nombre"[(ngModel)]="registroClienteDTO.nombre" required maxlength="100" />                            
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Foto para el Perfil: </label>
-                            <input type="file" class="form-control" name="fotoPerfil" (change)="onFileChange($event)" multiple />
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Ciudad: </label>
-                            <select class="form-select" name="ciudadResidencia" required [(ngModel)]="registroClienteDTO.ciudadResidencia"> 
-                                <option value="" selected>Seleccione una ciudad</option>
-                                <option *ngFor="let item of ciudades" [value]="item">{{item}}</option>
-                            </select>
+                            <label class="form-label">Apellido: </label>
+                            <input #apellido="ngModel" class="form-control" [ngClass]="apellido.invalid && apellido.dirty ? 'is-invalid' : ''" type="text" name="apellido"[(ngModel)]="registroClienteDTO.apellido" required maxlength="100" />                            
                         </div>
 
                         <div class="mb-3">
@@ -33,9 +29,24 @@
 
                         <div class="mb-3">
                             <label class="form-label">Correo electrónico: </label>
-                            <input #correo="ngModel" class="form-control" [ngClass]="correo.invalid && correo.dirty ? 'is-invalid' : ''" type="email" name="email" [(ngModel)]="registroClienteDTO.email"
+                            <input #email="ngModel" class="form-control" [ngClass]="email.invalid && email.dirty ? 'is-invalid' : ''" type="email" name="email" [(ngModel)]="registroClienteDTO.email"
                                 required email />
                         </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Ciudad: </label>
+                            <select class="form-select" name="ciudadResidencia" required [(ngModel)]="registroClienteDTO.ciudadResidencia"> 
+                                <option value="" selected>Seleccione una ciudad</option>
+                                <option *ngFor="let item of ciudades" [value]="item">{{item}}</option>
+                            </select>
+                        </div>
+                        
+
+                        <div class="mb-3">
+                            <label class="form-label">Teléfono(s):</label>
+                            <input class="form-control" type="tel" name="telefono" [(ngModel)]="this.telefonos" required />
+                        </div>
+                                               
 
                         <div class="mb-3">
                             <label class="form-label">Contraseña: </label>
@@ -46,16 +57,20 @@
                         <div class="mb-3">
                             <label class="form-label">Repetir contraseña: </label>
                             <input class="form-control" type="password" name="confirmaPassword"
-                                [(ngModel)]="registroClienteDTO.confirmarPassword" required />
+                                [(ngModel)]="confirmarPassword" required />
                             <div *ngIf="!sonIguales()">
                                 <br>
                                 <div class="alert alert-danger" role="alert">Las contraseñas no coinciden</div>
-
                             </div>
                         </div>
 
+                        <div class="mb-3">
+                            <label class="form-label">Foto para el Perfil: </label>
+                            <input type="file" class="form-control" name="fotoPerfil" (change)="onFileChange($event)" multiple />
+                        </div>
+
                         <button class="btn btn-primary" type="submit"
-                            [disabled]="f.invalid || !sonIguales()">Registrarse</button>
+                            [disabled]="Registro.invalid || !sonIguales()">Registrarse</button>
                     </form>
                 </div>
             </div>

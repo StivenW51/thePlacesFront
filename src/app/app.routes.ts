@@ -9,6 +9,8 @@ import { GestionNegociosComponent } from './componentes/gestion-negocios/gestion
 import { FavoritosComponent } from './componentes/favoritos/favoritos.component';
 import { CrearNegocioComponent } from './componentes/crear-negocio/crear-negocio.component';
 import { DetalleNegocioComponent } from './componentes/detalle-negocio/detalle-negocio.component';
+import { LoginGuard } from './guards/permiso.service';
+import { RolesGuard } from './guards/roles.service';
 
 export const routes: Routes = [
 { path: 'header', component: HeaderComponent},
@@ -16,10 +18,17 @@ export const routes: Routes = [
 { path: 'categorias', component: CategoriasComponent },
 { path: 'login', component: LoginComponent },
 { path: 'registro-cliente', component: RegistroClienteComponent },
-{ path: 'negocios-pendientes', component: NegociosPendientesComponent },
-{ path: 'gestion-negocios', component: GestionNegociosComponent},
-{ path: 'favoritos', component: FavoritosComponent},
-{ path: 'crear-negocio', component: CrearNegocioComponent},
+{ path: 'negocios-pendientes', component: NegociosPendientesComponent, canActivate: [RolesGuard], data: { expectedRole: ["MODERADOR"] } },
+{ path: 'gestion-negocios', component: GestionNegociosComponent, canActivate: [RolesGuard], data: { expectedRole: ["CLIENTE"] }},
+{ path: 'favoritos', component: FavoritosComponent, canActivate: [RolesGuard], data: { expectedRole: ["CLIENTE"] }},
+{ path: 'crear-negocio', component: CrearNegocioComponent, canActivate: [RolesGuard], data: { expectedRole: ["CLIENTE"] }},
 { path: 'detalle-negocio/:codigo', component: DetalleNegocioComponent},
-{ path: "**", pathMatch: "full", redirectTo: "" }
+{ path: "**", pathMatch: "full", redirectTo: "" },
+{ path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
+{ path: 'registro', component: RegistroClienteComponent, canActivate: [LoginGuard] },
+
+
+{ path: "gestion-negocios", component: GestionNegociosComponent, canActivate: [RolesGuard], data: { expectedRole: ["CLIENTE"] } },
+{ path: "crear-negocio", component: CrearNegocioComponent, canActivate: [RolesGuard], data: {expectedRole: ["CLIENTE"] } },
+{ path: "gestio-negocios-admin", component: GestionNegociosComponent, canActivate:[RolesGuard], data: { expectedRole: ["MODERADOR"] } }
 ];

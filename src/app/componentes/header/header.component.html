@@ -6,23 +6,30 @@
       </a>
 
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-        <!--<li><a routerLink="login" class="nav-link px-2 text-secondary">Login</a></li>-->
-        <li><a routerLink="/inicio" routerLinkActive="active" class="nav-link px-2 text-white"><i class="fas fa-home me-2"></i>Inicio</a></li>
-        <!--<li><a routerLink="registro-cliente" class="nav-link px-2 text-white">Registro Cliente</a></li>-->
-        <li><a routerLink="/categorias" routerLinkActive="active" class="nav-link px-2 text-white"><i class="fas fa-th-list me-2"></i>Categorias</a></li>
-        <li><a routerLink="/negocios-pendientes" routerLinkActive="active" class="nav-link px-2 text-white"><i class="fas fa-clock me-2"></i>Negocios Pendientes</a></li>
-        <li><a routerLink="/gestion-negocios" routerLinkActive="active" class="nav-link px-2 text-white"><i class="fas fa-briefcase me-2"></i>Gestion Negocios</a></li>
-        <li><a routerLink="/favoritos" routerLinkActive="active" class="nav-link px-2 text-white"><i class="fas fa-heart me-2"></i>Favoritos</a></li>
+      <li><a routerLink="/inicio" routerLinkActive="active" class="nav-link px-2 text-white"><i class="fas fa-home me-2"></i>Inicio</a></li>
+       <li><a routerLink="/categorias" routerLinkActive="active" class="nav-link px-2 text-white"><i class="fas fa-th-list me-2"></i>Categorias</a></li>
+       
+       <li *ngIf="getRole() === 'MODERADOR'"><a routerLink="/negocios-pendientes" routerLinkActive="active" class="nav-link px-2 text-white"><i class="fas fa-clock me-2"></i>Negocios Pendientes</a></li>
+       
+       <li *ngIf="getRole() === 'CLIENTE'"><a routerLink="/gestion-negocios" routerLinkActive="active" class="nav-link px-2 text-white"><i class="fas fa-briefcase me-2"></i>Gestion Negocios</a></li>
+       <li *ngIf="getRole() === 'CLIENTE'"><a routerLink="/favoritos" routerLinkActive="active" class="nav-link px-2 text-white"><i class="fas fa-heart me-2"></i>Favoritos</a></li>
       </ul>
 
-      <!--<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-        <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
-      </form>-->
+      <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+       <!--- <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">-->
+      </form>
 
       <div class="text-end">
+        @if (!isLogged) {
         <button routerLink="login" type="button" class="btn btn-outline-light me-2"><i class="fas fa-user me-2"></i>Login</button>
         <button routerLink="registro-cliente" type="button" class="btn btn-warning"><i class="fas fa-user-plus me-2"></i>Registrarse</button>
-      </div>
+        }@else {
+          <label class="me-3" >Hola {{email}}</label>
+        <button type="button" (click)="logout()" class="btn btn-primary ">Logout</button>
+        }
+              </div>
+     
+
     </div>
   </div>
 </header>

@@ -15,18 +15,8 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  public registrarCliente(cliente: RegistroClienteDTO): Observable<MensajeDTO> {
-    return this.http.post<MensajeDTO>(`${this.authURL}/registrar-cliente`, cliente);
+  public login(inicioSesionDTO: InicioSesionDTO): Observable<MensajeDTO> {
+    return this.http.post<MensajeDTO>(`${this.authURL}/login`, inicioSesionDTO);
   }
-
-  public loginCliente(inicioSesionDTO: InicioSesionDTO): Observable<MensajeDTO> {
-    return this.http.post<MensajeDTO>(`${this.authURL}/login-cliente`, inicioSesionDTO);
-  }
-
-  public loginModerador(inicioSesionDTO: InicioSesionDTO): Observable<MensajeDTO> {
-    return this.http.post<MensajeDTO>(`${this.authURL}/login-moderador`, inicioSesionDTO);
-  }
-
-
 
 }
