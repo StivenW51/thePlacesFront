@@ -1,0 +1,9 @@
+.carousel-item img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+  }
+  .stars {
+    color: gold;
+    font-size: 1.5rem;
+  }

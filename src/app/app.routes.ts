@@ -23,16 +23,16 @@ export const routes: Routes = [
 { path: 'registro-cliente', component: RegistroClienteComponent },
 { path: 'recuperar', component: RecuperarComponent },
 { path: 'recuperar-password', component: RecuperarPasswordComponent  },
-{ path: 'negocios-pendientes', component: NegociosPendientesComponent, canActivate: [RolesGuard], data: { expectedRole: ["MODERADOR"] } },
-{ path: 'gestion-negocios', component: GestionNegociosComponent, canActivate: [RolesGuard], data: { expectedRole: ["CLIENTE"] }},
-{ path: 'favoritos', component: FavoritosComponent, canActivate: [RolesGuard], data: { expectedRole: ["CLIENTE"] }},
+{ path: 'negocios-pendientes', component: NegociosPendientesComponent}, //canActivate: [RolesGuard], data: { expectedRole: ["MODERADOR"] } },
+{ path: 'gestion-negocios', component: GestionNegociosComponent}, //canActivate: [RolesGuard], data: { expectedRole: ["CLIENTE"] }},
+{ path: 'favoritos', component: FavoritosComponent},// canActivate: [RolesGuard], data: { expectedRole: ["CLIENTE"] }},
 { path: 'crear-negocio', component: CrearNegocioComponent},//, canActivate: [RolesGuard], data: { expectedRole: ["CLIENTE"] }},
 { path: 'detalle-negocio/:codigo', component: DetalleNegocioComponent},
 { path: "**", pathMatch: "full", redirectTo: "" },
-{ path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
-{ path: 'registro', component: RegistroClienteComponent, canActivate: [LoginGuard] },
+{ path: 'login', component: LoginComponent},// canActivate: [LoginGuard] },
+{ path: 'registro', component: RegistroClienteComponent},// canActivate: [LoginGuard] },
 
-{ path: "gestion-negocios", component: GestionNegociosComponent, canActivate: [RolesGuard], data: { expectedRole: ["CLIENTE"] } },
-{ path: "crear-negocio", component: CrearNegocioComponent, canActivate: [RolesGuard], data: {expectedRole: ["CLIENTE"] } },
-{ path: "gestio-negocios-admin", component: GestionNegociosComponent, canActivate:[RolesGuard], data: { expectedRole: ["MODERADOR"] } }
+{ path: "gestion-negocios", component: GestionNegociosComponent},// canActivate: [RolesGuard], data: { expectedRole: ["CLIENTE"] } },
+{ path: "crear-negocio", component: CrearNegocioComponent},// canActivate: [RolesGuard], data: {expectedRole: ["CLIENTE"] } },
+{ path: "gestio-negocios-admin", component: GestionNegociosComponent}//, canActivate:[RolesGuard], data: { expectedRole: ["MODERADOR"] } }
 ];
