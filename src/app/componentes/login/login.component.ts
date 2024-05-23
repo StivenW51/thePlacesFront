@@ -33,27 +33,34 @@ export class LoginComponent {
 
 
   Login() {
-    this.authService.login(this.inicioSesion).subscribe(
-      response => {
+    this.authService.login(this.inicioSesion).subscribe({
+      next: response => {
+
         if (response.respuesta) {
           console.log(response);
           this.tokenService.setToken(response.respuesta.token);
 
           if (this.tokenService.getRole() == "CLIENTE") {
-            this.router.navigate(['/gestion-negocios']);
+            this.router.navigate(['/gestion-negocios']).then(() => {
+              window.location.reload();
+            });;
           }
           else if(this.tokenService.getRole() == "MODERADOR"){
-            this.router.navigate(['/negocios-pendientes']);
+            this.router.navigate(['/negocios-pendientes']).then(() => {
+              window.location.reload();
+            });;
           }
         } else {
           console.error('ok');
         }
       },
-      error => {
+      
+      error : error => {
         console.error(error);
         this.errorMessage = 'Contraseña incorrecta';
       }
-    );
+
+    });
   }
 }
 

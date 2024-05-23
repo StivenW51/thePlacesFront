@@ -13,7 +13,7 @@ export class ClienteService {
 
   constructor(private http: HttpClient ) { }
 
-  public registrarCliente(registroClienteDTO: RegistroClienteDTO): any {
+  public registrarCliente(registroClienteDTO: RegistroClienteDTO): Observable<MensajeDTO> {
     //return this.http.post<MensajeDTO>(`${this.authURL}/registrar`, registroClienteDTO);
     return this.http.post<MensajeDTO>(`${this.authURL}/registrar`, registroClienteDTO)
   }

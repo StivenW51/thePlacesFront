@@ -43,10 +43,22 @@ export class RegistroClienteComponent {
         this.registroClienteDTO.telefono = [this.telefonos];
       }
 
-      const reg = this.clienteServicio.registrarCliente(this.registroClienteDTO);
-      //confirm("Cliente registrado exitosamente");
-      console.log(reg);
-      this.router.navigate(['/login']);
+      this.clienteServicio.registrarCliente(this.registroClienteDTO).subscribe(
+        response => {
+          if (response.respuesta) {
+            console.log(response);
+            confirm("Cliente registrado exitosamente");
+      
+            this.router.navigate(['/login']);
+          } else {
+            console.error('ok');
+          }
+        },
+        error => {
+          console.error(error);
+        }
+      );
+  
 
     }else{
       console.log("Debe cargar una foto");      
