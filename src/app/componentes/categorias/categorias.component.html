@@ -1,1 +1,53 @@
-<p>categorias works!</p>
+<div class="container">
+    <div class="row">
+      <!-- Sidebar con las categorías -->
+      <div class="col-md-3">
+        <h4>Categorías</h4>
+        <ul class="list-group">
+          <li 
+            *ngFor="let categoria of categorias" 
+            class="list-group-item list-group-item-action" 
+            (click)="seleccionarCategoria(categoria)"
+            style="cursor: pointer;"
+          >
+            {{ categoria }}
+          </li>
+        </ul>
+      </div>
+  
+      <!-- Lista de negocios -->
+      <div class="col-md-9">
+        <div class="row">
+          <div class="col-md-12">
+            <h4>Negocios Disponibles</h4>
+          </div>
+          <!-- Tarjeta de negocio -->
+          <div 
+            class="col-md-12" 
+            *ngFor="let negocio of negociosFiltrados"
+          >
+            <div class="card mb-3" style="max-width: 540px;">
+              <div class="row no-gutters">
+                <div class="col-md-4">
+                  <img [src]="negocio.imagenes" class="card-img" [alt]="negocio.nombreNegocio">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ negocio.nombreNegocio }}</h5>
+                    <p class="card-text">{{ negocio.descripcion }}</p>
+                    <p class="card-text"><small class="text-muted">{{ negocio.direccion }}</small></p>
+                    <p class="card-text"><small class="text-muted">{{ negocio.telefonos }}</small></p>
+                    <p class="card-text"><small class="text-muted">Calificación: {{ negocio.calificacion }}</small></p>
+                    <p class="card-text"><small class="text-muted">Estado: {{ negocio.estadoNegocio }}</small></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Repite las tarjetas según sea necesario -->
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  

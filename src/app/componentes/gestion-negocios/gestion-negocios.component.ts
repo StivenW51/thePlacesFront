@@ -23,8 +23,8 @@ export class GestionNegociosComponent {
 
   constructor(private negocioService: NegociosService, private tokenService: TokenService) {
     this.idCliente = '';
-    //this.listarNegocios();
-    this.listarNegociosActivos();
+    this.listarNegocios();
+    //this.listarNegociosActivos();
   }
 
   public seleccionar(producto: DetalleNegocioDTO, estado: boolean) {
@@ -61,7 +61,7 @@ export class GestionNegociosComponent {
 
   public listarNegocios() {
     const values = this.tokenService.decodePayload(this.tokenService.getToken());
-    this.idCliente = values['id']; // saca el id del cliente
+    this.idCliente = values.id; // saca el id del cliente
 
     this.negocioService.listarNegociosPropietario(this.idCliente).subscribe({
       next: (data) => {

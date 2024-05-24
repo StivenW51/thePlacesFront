@@ -17,6 +17,7 @@ export class HeaderComponent {
   isLogged = false;
   email: string = "";
  
+ 
 
   constructor(private tokenService: TokenService) {
     
@@ -27,6 +28,8 @@ export class HeaderComponent {
     
     if (this.isLogged) {
       this.email = this.tokenService.getEmail();
+   
+
     }
   }
 

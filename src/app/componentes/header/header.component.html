@@ -9,10 +9,10 @@
       <li><a routerLink="/inicio" routerLinkActive="active" class="nav-link px-2 text-white"><i class="fas fa-home me-2"></i>Inicio</a></li>
        <li><a routerLink="/categorias" routerLinkActive="active" class="nav-link px-2 text-white"><i class="fas fa-th-list me-2"></i>Categorias</a></li>
        
-       <!--<li *ngIf="getRole() === 'MODERADOR'">--><li><a routerLink="/negocios-pendientes" routerLinkActive="active" class="nav-link px-2 text-white"><i class="fas fa-clock me-2"></i>Negocios Pendientes</a></li>
+       <li *ngIf="getRole() === 'MODERADOR'"><a routerLink="/negocios-pendientes" routerLinkActive="active" class="nav-link px-2 text-white"><i class="fas fa-clock me-2"></i>Negocios Pendientes</a></li>
        
-       <!--<li *ngIf="getRole() === 'CLIENTE'">--><li><a routerLink="/gestion-negocios" routerLinkActive="active" class="nav-link px-2 text-white"><i class="fas fa-briefcase me-2"></i>Gestion Negocios</a></li>
-       <!--<li *ngIf="getRole() === 'CLIENTE'">--><li><a routerLink="/favoritos" routerLinkActive="active" class="nav-link px-2 text-white"><i class="fas fa-heart me-2"></i>Favoritos</a></li>
+       <li *ngIf="getRole() === 'CLIENTE'"><a routerLink="/gestion-negocios" routerLinkActive="active" class="nav-link px-2 text-white"><i class="fas fa-briefcase me-2"></i>Gestion Negocios</a></li>
+       <li *ngIf="getRole() === 'CLIENTE'"><a routerLink="/favoritos" routerLinkActive="active" class="nav-link px-2 text-white"><i class="fas fa-heart me-2"></i>Favoritos</a></li>
       </ul>
 
       <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
