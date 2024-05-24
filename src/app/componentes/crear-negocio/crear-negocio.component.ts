@@ -107,4 +107,5 @@ export class CrearNegocioComponent {
   private cargarDias(){
     this.tiposNegocio = ["LUNES","MARTES","MIERCOLES","JUEVES","VIERNES","SABADO", "DOMINGO"];
   }
+  
 }
