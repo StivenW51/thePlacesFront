@@ -1,7 +1,6 @@
 <div class="card">
     <div class="card-header ps-5 pt-4 pb-4">
-        <h5 class="mb-0"><i class="fa-solid fa-location-dot me-2"></i>Crear un nuevo
-            negocio</h5>
+        <h5 class="mb-0"><i class="fa-solid fa-location-dot me-2"></i>Crear un nuevo negocio</h5>
     </div>
     <div class="card-body p-5">
         <form #f="ngForm">
@@ -10,7 +9,7 @@
                 <div class="col-sm-10">
                     <input #nombre="ngModel" class="form-control"
                         [ngClass]="nombre.invalid && nombre.dirty ? 'is-invalid' : ''" type="text" name="nombre"
-                        [(ngModel)]="registroNegocioDTO.nombreNegocio" required />
+                        [(ngModel)]="crearNegocioDTO.nombre" required />
                 </div>
             </div>
             <div class="mb-3 row">
@@ -18,33 +17,24 @@
                 <div class="col-sm-10">
                     <textarea #descripcion="ngModel"
                         [ngClass]="descripcion.invalid && descripcion.dirty ? 'is-invalid' : ''" type="text"
-                        [(ngModel)]="registroNegocioDTO.descripcionNegocio" name="descripcion" required
+                        [(ngModel)]="crearNegocioDTO.descripcion" name="descripcion" required
                         class="form-control"></textarea>
                 </div>
             </div>
-
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label">Dirección: </label>
+                <div class="col-sm-10">
+                    <input #direccion="ngModel" class="form-control"
+                        [ngClass]="direccion.invalid && direccion.dirty ? 'is-invalid' : ''" type="text" name="direccion"
+                        [(ngModel)]="crearNegocioDTO.direccion" required />
+                </div>
+            </div>
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label">Ubicación: </label>
                 <div class="col-sm-10">
-                <div id="mapa"></div>
+                    <div id="mapa"></div>
                 </div>
-                </div>
-                
-            <!--<div class="mb-3 row">
-                <label class="col-sm-2 col-form-label">Ubicación: </label>
-                <div class="col-sm-10">
-                    <div class="row">
-                        <div class="col">
-                            <input #latitud="ngModel" class="form-control"
-                                [ngClass]="latitud.invalid && latitud.dirty ? 'is-invalid' : ''" type="number"
-                                name="latitud" [(ngModel)]="registroNegocioDTO.ubicacion" required />
-                        </div>
-                        <div class="col">
-                            <input #longitud="ngModel" class="form-control" [ngClass]="longitud.invalid && longitud.dirty ? 'is-invalid' : ''" type="number" name="longitud" [(ngModel)]="registroNegocioDTO.ubicacion" required />
-                        </div>
-                    </div>
-                </div>
-            </div>-->
+            </div>
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label">Imágenes: </label>
                 <div class="col-sm-10">
@@ -55,41 +45,32 @@
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label">Tipo: </label>
                 <div class="col-sm-10">
-                    <select name="tipo" required class="form-select" [(ngModel)]="registroNegocioDTO.tipoNegocio">
-
+                    <select name="tipo" required class="form-select" [(ngModel)]="crearNegocioDTO.tipoNegocio">
                         <option value="" selected>Seleccione un tipo para el negocio</option>
-                        <!-- Completar (se puede basar en cómo se cargan las ciudades del
-        
-        formulario de registro de clientes) -->
-
+                        <option *ngFor="let item of tiposNegocio" [value]="item">{{item}}</option>
                     </select>
                 </div>
             </div>
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label">Horarios: </label>
                 <div class="col-sm-8">
-                    @for (item of horarios; track $index) {
-                    <div class="row mb-2 ">
+                    <div *ngFor="let item of horarios; let i = index" class="row mb-2">
                         <div class="col">
-                            <input class="form-control" placeholder="Día" type="text" name="dia-{{$index}}"
+                            <input class="form-control" placeholder="Día" type="text" name="dia-{{i}}"
                                 [(ngModel)]="item.dia" required />
-
                         </div>
                         <div class="col">
-                            <input class="form-control" placeholder="Hora Inicio" type="time"
-                                name="horaInicio-{{$index}}" [(ngModel)]="item.horaInicio" required />
-
+                            <input class="form-control" placeholder="Hora Inicio" type="time" name="horaInicio-{{i}}"
+                                [(ngModel)]="item.horaInicio" required />
                         </div>
                         <div class="col">
-                            <input class="form-control" placeholder="Hora Fin" type="time" name="horaFin-{{$index}}"
+                            <input class="form-control" placeholder="Hora Fin" type="time" name="horaFin-{{i}}"
                                 [(ngModel)]="item.horaFinal" required />
-
                         </div>
                     </div>
-                    }
                 </div>
-                <div class="col-sm-2 text-end ">
-                    <button class="btn btn-primary" (click)="agregarHorario()">
+                <div class="col-sm-2 text-end">
+                    <button class="btn btn-primary" type="button" (click)="agregarHorario()">
                         <i class="fa-solid fa-circle-plus me-1"></i>Agregar horario
                     </button>
                 </div>
@@ -97,10 +78,23 @@
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label">Teléfonos: </label>
                 <div class="col-sm-10">
-                    <!-- Completar (se puede basar en lo hecho con los horarios) -->
+                    <div *ngFor="let telefono of crearNegocioDTO.telefonos; let i = index" class="row mb-2">
+                        <div class="col">
+                            <input class="form-control" type="text" name="telefono-{{i}}" [(ngModel)]="crearNegocioDTO.telefonos[i]" required />
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-danger" type="button" (click)="crearNegocioDTO.telefonos.splice(i, 1)">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary mt-2" type="button" (click)="crearNegocioDTO.telefonos.push('')">
+                        <i class="fa-solid fa-circle-plus me-1"></i>Agregar teléfono
+                    </button>
                 </div>
             </div>
-            <button class="btn btn-primary" (click)="crearNegocio()" [disabled]="f.invalid">
+            
+            <button class="btn btn-primary" type="button" (click)="crearNegocio()" [disabled]="f.invalid">
                 <i class="fa-solid fa-circle-plus me-1"></i>Crear negocio
             </button>
         </form>

@@ -10,7 +10,7 @@ export class ItemNegocioDTO {
           public ubicacion: Ubicacion = new Ubicacion(),
           public direccion: string ='',
           public telefonos: string ='',
-          public calificacion: number,
+          public calificacion: number = 0,
           public descripcion: string ='',
           public horarios: Horario[] = [],
           public estadoNegocio: string = '',

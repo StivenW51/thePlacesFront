@@ -5,7 +5,6 @@ import { UbicacionNegocioDTO } from "./ubicacion-negocio-dto";
 export class RegistroNegocioDTO {
 
     constructor(
-        public codigo: string ='',
         public nombreNegocio: string='',
         public imagenes: string[] = [],
         public tipoNegocio: string = '',

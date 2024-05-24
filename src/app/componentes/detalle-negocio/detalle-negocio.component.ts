@@ -5,6 +5,7 @@ import { NegociosService } from '../../Servicios/negocios.service';
 import { CommonModule } from '@angular/common';
 import { __param } from 'tslib';
 import mapboxgl from 'mapbox-gl';
+import { DetalleNegocioDTO } from '../../dto/detalle-negocio-dto';
 
 @Component({
   selector: 'app-detalle-negocio',
@@ -16,21 +17,27 @@ import mapboxgl from 'mapbox-gl';
 export class DetalleNegocioComponent  {
 
   codigoNegocio: string = '';
-  negocio: ItemNegocioDTO | undefined;
+  negocio: DetalleNegocioDTO
 
   constructor(private route: ActivatedRoute, private negocioService: NegociosService) {
     this.route.params.subscribe((params) => {
       this.codigoNegocio = params['codigo'];
-      this.obtenerNegocio();
     });
+
+    this.negocio = new DetalleNegocioDTO();
+    this.obtenerNegocio(this.codigoNegocio);
+    
   }
 
-  public obtenerNegocio() {
-    const negocioConsultado = this.negocioService.obtener(this.codigoNegocio);
-
-    if (negocioConsultado != undefined) {
-      //this.negocio = negocioConsultado;
-    }
+  public obtenerNegocio(codigoNegocio: string) {
+    this.negocioService.obtenerNegocio(codigoNegocio).subscribe({
+      next: (data) => {
+        this.negocio = data.respuesta;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    }); 
   }
 
 
@@ -53,15 +60,16 @@ export class DetalleNegocioComponent  {
     const mapa = new mapboxgl.Map({
       container: 'mapa',
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [-58.381592, -34.603722], // Coordenadas: Longitud, Latitud
+      center: [this.negocio.ubicacion.longitud, this.negocio.ubicacion.latitud], // Coordenadas: Longitud, Latitud
       zoom: 15
     });
 
     new mapboxgl.Marker()
-      .setLngLat([-58.381592, -34.603722]) // Coordenadas: Longitud, Latitud
+      .setLngLat([this.negocio.ubicacion.longitud, this.negocio.ubicacion.latitud]) // Coordenadas: Longitud, Latitud
       //.setLngLat([])
       .addTo(mapa);
   }
+
 
 
 

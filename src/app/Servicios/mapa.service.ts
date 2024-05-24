@@ -57,7 +57,6 @@ export class MapaService {
   }
 
 
-  
 
   /*public pintarMarcadorNegocio(negocio: ItemNegocioDTO) {
     new mapboxgl.Marker()
@@ -82,12 +81,12 @@ pintarMarcadorNegocioConCoordenadasPrueba() {
     .addTo(this.mapa);
 }*/
 
-
+/*
 public pintarNegocio(){
   new mapboxgl.Marker()
   .setLngLat([-58.381592, -34.603722]) // Coordenadas: Longitud, Latitud
   .addTo(this.mapa);
-}
+}*/
 
 }
   

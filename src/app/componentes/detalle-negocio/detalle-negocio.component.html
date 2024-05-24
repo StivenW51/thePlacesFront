@@ -1,22 +1,17 @@
 <div class="container mt-5">
   <div class="card">
     <div class="card-header">
-      <h5 class="mb-0"><i class="fas fa-store"></i> Mi Negocio</h5>
+      <h5 class="mb-0"><i class="fas fa-store"></i> {{ negocio.nombreNegocio }}</h5>
     </div>
     <div class="card-body">
       <div class="row">
         <!-- Left Column -->
         <div class="col-md-6">
-          
-
           <h6><i class="fas fa-images"></i> Imágenes</h6>
           <div id="imageCarousel" class="carousel slide mb-3" data-ride="carousel">
             <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src="https://via.placeholder.com/600x300" class="d-block w-100" alt="Imagen del negocio 1">
-              </div>
-              <div class="carousel-item">
-                <img src="https://via.placeholder.com/600x300" class="d-block w-100" alt="Imagen del negocio 2">
+              <div *ngFor="let imagen of negocio.imagenes; let i = index" [class.active]="i === 0" class="carousel-item">
+                <img [src]="imagen" class="d-block w-100" [alt]="'Imagen del negocio ' + (i + 1)">
               </div>
             </div>
             <a class="carousel-control-prev" href="#imageCarousel" role="button" data-slide="prev">
@@ -31,38 +26,37 @@
 
           <h6><i class="fas fa-star"></i> Calificación</h6>
           <div class="stars mb-3">
-            ★★★★☆
+            <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
+              <i class="fas" [class.fa-star]="negocio.calificacion" [class.fa-star-half-alt]="i + 0.5 === negocio.calificacion" [class.fa-star-o]="negocio.calificacion"></i>
+            </ng-container>
           </div>
 
           <h6><i class="fas fa-clock"></i> Horario</h6>
           <ul class="list-group mb-3">
-            <li class="list-group-item">Lunes: 09:00 - 18:00</li>
-            <li class="list-group-item">Martes: 09:00 - 18:00</li>
+            <li class="list-group-item" *ngFor="let horario of negocio.horario">
+              {{ horario.dia }}: {{ horario.horaInicio }} - {{ horario.horaFinal }}
+            </li>
           </ul>
 
           <h6><i class="fas fa-align-left"></i> Descripción</h6>
-          <p>Descripción del negocio.</p>
+          <p>{{ negocio.descripcion }}</p>
 
           <h6><i class="fas fa-phone"></i> Teléfonos</h6>
           <ul class="list-group mb-3">
-            <li class="list-group-item">123-456-7890</li>
-            <li class="list-group-item">098-765-4321</li>
+            <li class="list-group-item" *ngFor="let telefono of negocio.telefonos">{{ telefono }}</li>
           </ul>
         </div>
 
         <!-- Right Column -->
         <div class="col-md-6">
-          
-          <p><i class="fas fa-map-marker-alt"></i> <strong> Dirección:</strong> Calle Falsa 123</p>
-          <p><i class="fas fa-tags"></i> <strong> Categoría:</strong> Comercio</p>
-          
-          
+          <p><i class="fas fa-map-marker-alt"></i> <strong> Dirección:</strong> {{ negocio.direccion }}</p>
+          <p><i class="fas fa-tags"></i> <strong> Categoría:</strong> {{ negocio.categoria }}</p>
+
           <h6><i class="fas fa-map-marker-alt"></i> Ubicación</h6>
           <div id="mapa" style="width: 100%; height: 300px;"></div>
 
-          <br>
-          <br>
-          
+{{negocio.ubicacion.longitud}} {{negocio.ubicacion.latitud}}
+          <br><br>
 
           <h6><i class="fas fa-comments"></i> Comentarios</h6>
           <div class="list-group mb-3">
@@ -103,6 +97,5 @@
 </div>
 
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+

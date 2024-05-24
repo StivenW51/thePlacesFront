@@ -43,8 +43,8 @@ export class RegistroClienteComponent {
         this.registroClienteDTO.telefono = [this.telefonos];
       }
 
-      this.clienteServicio.registrarCliente(this.registroClienteDTO).subscribe(
-        response => {
+      this.clienteServicio.registrarCliente(this.registroClienteDTO).subscribe({
+        next: response => {
           if (response.respuesta) {
             console.log(response);
             confirm("Cliente registrado exitosamente");
@@ -54,10 +54,10 @@ export class RegistroClienteComponent {
             console.error('ok');
           }
         },
-        error => {
+        error: error => {
           console.error(error);
         }
-      );
+    });
   
 
     }else{
