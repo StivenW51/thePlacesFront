@@ -13,8 +13,6 @@ export class ClienteService {
 
   private authURL =  `${this.rutas.ruta}/api/publico`;
 
-
-
   constructor(private http: HttpClient, 
     private tokenService: TokenService, 
     private rutas: RutasService) {}

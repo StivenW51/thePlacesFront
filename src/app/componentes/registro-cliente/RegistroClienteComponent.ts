@@ -4,8 +4,7 @@ import { FormsModule } from "@angular/forms";
 import { RegistroClienteDTO } from "../../dto/registro-cliente-dto";
 import { ClienteService } from "../../Servicios/cliente.service";
 import { Router } from "@angular/router";
-
-
+import { ImagenService } from "../../Servicios/imagen-service";
 
 @Component({
   selector: 'app-registro-cliente',
@@ -22,7 +21,10 @@ export class RegistroClienteComponent {
   confirmarPassword: string;
   telefonos: string;
 
-  constructor(private clienteServicio: ClienteService, private router: Router) {
+  constructor(private clienteServicio: ClienteService, 
+              private router: Router, 
+              private imagenService: ImagenService) {
+
     this.registroClienteDTO = new RegistroClienteDTO();
     this.ciudades = [];
     this.cargarCiudades();
@@ -57,15 +59,11 @@ export class RegistroClienteComponent {
         error: error => {
           console.error(error);
         }
-    });
-  
-
-    }else{
+      });
+    }
+    else{
       console.log("Debe cargar una foto");      
     }
-
-
-
   }
 
   public sonIguales(): boolean {
@@ -73,14 +71,23 @@ export class RegistroClienteComponent {
   }
 
   private cargarCiudades(){
-    this.ciudades = ["Bogotá", "Medellín", "Cali", "Barranquilla", "Cartagena"];
+    this.ciudades = ["Armenia", "Bogotá", "Medellín", "Cali", "Barranquilla", "Cartagena"];
   }
 
   public onFileChange(event:any){
     if(event.target.files.length>0){
       this.archivos = event.target.files;
-      const file = 
-      this.registroClienteDTO.fotoPerfil = this.archivos[0];
+      this.imagenService.subirImagen(this.archivos[0]).subscribe({
+        next: data => {
+          if(data != ''){
+            console.log(data);
+            this.registroClienteDTO.fotoPerfil = data.respuesta.secure_url;
+          }
+        },
+        error: error =>{
+          console.error(error);
+        }
+      })      
     }
   }
 

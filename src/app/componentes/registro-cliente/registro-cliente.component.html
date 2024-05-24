@@ -65,10 +65,11 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Foto para el Perfil: </label>
+                            <label class="form-label">Foto de Perfil: </label>
                             <input type="file" class="form-control" name="fotoPerfil" 
-                                (change)="onFileChange($event)" multiple />
+                                (change)="onFileChange($event)" multiple required/>
                         </div>
+                        
 
                         <button class="btn btn-primary" type="submit"
                             [disabled]="Registro.invalid || !sonIguales()">Registrarse</button>

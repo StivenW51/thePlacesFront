@@ -10,7 +10,7 @@ export class RegistroClienteDTO {
         public email: string = '',
         public ciudadResidencia: string = '',
         public password: string = '',
-        public fotoPerfil: any = null,
+        public fotoPerfil: string = '',
         public telefono: string[] = [],
         public favoritos: string[] = []
     ) { }
