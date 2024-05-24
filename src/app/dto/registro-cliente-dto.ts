@@ -9,8 +9,8 @@ export class RegistroClienteDTO {
         public nickname: string = '',
         public email: string = '',
         public ciudadResidencia: string = '',
-         public password: string = '',
-        public fotoPerfil: string = '',
+        public password: string = '',
+        public fotoPerfil: any = null,
         public telefono: string[] = [],
         public favoritos: string[] = []
     ) { }

@@ -10,15 +10,18 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MensajeDTO } from '../dto/mensaje-dto';
 import { TokenService } from './token.service';
+import { RutasService } from './rutas.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NegociosService {
-  private authURL = 'http://localhost:8082/api/negocio';
+  private authURL = `${this.rutas.ruta}/api/negocio`;
   private idCliente: string = '';
 
-  constructor(private http: HttpClient, private tokenService: TokenService) {}
+  constructor(private http: HttpClient, 
+      private tokenService: TokenService, 
+      private rutas: RutasService) {}
 
   public listarNegociosCliente(): Observable<DetalleNegocioDTO[]> {
     const myToken = this.tokenService.getToken()

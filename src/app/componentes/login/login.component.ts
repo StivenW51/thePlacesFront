@@ -35,7 +35,6 @@ export class LoginComponent {
   Login() {
     this.authService.login(this.inicioSesion).subscribe({
       next: response => {
-
         if (response.respuesta) {
           console.log(response);
           this.tokenService.setToken(response.respuesta.token);

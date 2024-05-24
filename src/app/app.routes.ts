@@ -4,7 +4,7 @@ import { InicioComponent } from './componentes/inicio/inicio.component';
 import { CategoriasComponent } from './componentes/categorias/categorias.component';
 import { LoginComponent } from './componentes/login/login.component';
 import { NegociosPendientesComponent } from './componentes/negocios-pendientes/negocios-pendientes.component';
-import { RegistroClienteComponent } from './componentes/registro-cliente/registro-cliente.component';
+import { RegistroClienteComponent } from "./componentes/registro-cliente/RegistroClienteComponent";
 import { GestionNegociosComponent } from './componentes/gestion-negocios/gestion-negocios.component';
 import { FavoritosComponent } from './componentes/favoritos/favoritos.component';
 import { CrearNegocioComponent } from './componentes/crear-negocio/crear-negocio.component';

@@ -4,6 +4,7 @@ import { MensajeDTO } from '../dto/mensaje-dto';
 import { RegistroClienteDTO } from '../dto/registro-cliente-dto';
 import { Observable } from 'rxjs';
 import { InicioSesionDTO } from '../dto/inicio-sesion-dto';
+import { RutasService } from './rutas.service';
 
 
 @Injectable({
@@ -11,9 +12,9 @@ import { InicioSesionDTO } from '../dto/inicio-sesion-dto';
 })
 export class AuthService {
 
-  private authURL = "http://localhost:8082/api/auth";
+ private authURL = `${this.rutas.ruta}/api/auth`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private rutas: RutasService) { }
 
   public login(inicioSesionDTO: InicioSesionDTO): Observable<MensajeDTO> {
     return this.http.post<MensajeDTO>(`${this.authURL}/login`, inicioSesionDTO);
