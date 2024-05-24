@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { __param } from 'tslib';
 import mapboxgl from 'mapbox-gl';
 import { DetalleNegocioDTO } from '../../dto/detalle-negocio-dto';
+import { TokenService } from '../../Servicios/token.service';
 
 @Component({
   selector: 'app-detalle-negocio',
@@ -19,7 +20,7 @@ export class DetalleNegocioComponent  {
   codigoNegocio: string = '';
   negocio: DetalleNegocioDTO
 
-  constructor(private route: ActivatedRoute, private negocioService: NegociosService) {
+  constructor(private route: ActivatedRoute, private negocioService: NegociosService, private tokenService: TokenService) {
     this.route.params.subscribe((params) => {
       this.codigoNegocio = params['codigo'];
     });
@@ -68,6 +69,10 @@ export class DetalleNegocioComponent  {
       .setLngLat([this.negocio.ubicacion.longitud, this.negocio.ubicacion.latitud]) // Coordenadas: Longitud, Latitud
       //.setLngLat([])
       .addTo(mapa);
+  }
+
+  getRole(): string {
+    return this.tokenService.getRole(); // Asumiendo que getRole devuelve un string representando el rol del usuario
   }
 
 

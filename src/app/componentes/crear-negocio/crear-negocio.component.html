@@ -25,8 +25,8 @@
                 <label class="col-sm-2 col-form-label">Dirección: </label>
                 <div class="col-sm-10">
                     <input #direccion="ngModel" class="form-control"
-                        [ngClass]="direccion.invalid && direccion.dirty ? 'is-invalid' : ''" type="text" name="direccion"
-                        [(ngModel)]="crearNegocioDTO.direccion" required />
+                        [ngClass]="direccion.invalid && direccion.dirty ? 'is-invalid' : ''" type="text"
+                        name="direccion" [(ngModel)]="crearNegocioDTO.direccion" required />
                 </div>
             </div>
             <div class="mb-3 row">
@@ -54,52 +54,61 @@
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label">Horarios: </label>
                 <div class="col-sm-8">
-                    <div *ngFor="let item of horarios; let i = index" class="row mb-2">
-                        <div class="col">
-                            <!--<input class="form-select" placeholder="Día" type="select" name="dia-{{i}}"
-                                [(ngModel)]="item.dia" required />-->
-
-                        <select name="dia-{{i}}"  class="form-select" [(ngModel)]="item.dia" required>
-                        <option value="" selected >Seleccione un dia</option>
-                        <option *ngFor="let item of dias" [value]="item">{{item}}</option>
-
-                    </select>
-                        </div>
-                        <div class="col">
-                            <input class="form-control" placeholder="Hora Inicio" type="time" name="horaInicio-{{i}}"
-                                [(ngModel)]="item.horaInicio" required />
-                        </div>
-                        <div class="col">
-                            <input class="form-control" placeholder="Hora Fin" type="time" name="horaFin-{{i}}"
-                                [(ngModel)]="item.horaFinal" required />
-                        </div>
+                  <div *ngFor="let item of horarios; let i = index; trackBy: trackByIndex" class="row mb-2">
+                    <div class="col">
+                      <select name="dia-{{i}}" class="form-select" [(ngModel)]="item.dia" required>
+                        <option value="" selected>Seleccione un día</option>
+                        <option *ngFor="let dia of dias" [value]="dia">{{dia}}</option>
+                      </select>
                     </div>
-                </div>
-                <div class="col-sm-2 text-end">
-                    <button class="btn btn-primary" type="button" (click)="agregarHorario()">
+                    <div class="col">
+                      <input class="form-control" placeholder="Hora Inicio" type="time" name="horaInicio-{{i}}"
+                        [(ngModel)]="item.horaInicio" required />
+                    </div>
+                    <div class="col">
+                      <input class="form-control" placeholder="Hora Fin" type="time" name="horaFin-{{i}}"
+                        [(ngModel)]="item.horaFinal" required />
+                    </div>
+                    <div class="col-auto">
+                      <button class="btn btn-danger" type="button" (click)="eliminarHorario(i)">
+                        <i class="fa-solid fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="row mb-2">
+                    <div class="col">
+                      <button class="btn btn-primary" type="button" (click)="agregarHorario()">
                         <i class="fa-solid fa-circle-plus me-1"></i>Agregar horario
-                    </button>
+                      </button>
+                    </div>
+                  </div>
                 </div>
-            </div>
+              </div>
+              
+              
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label">Teléfonos: </label>
                 <div class="col-sm-10">
-                    <div *ngFor="let telefono of crearNegocioDTO.telefonos; let i = index" class="row mb-2">
+                    <div *ngFor="let telefono of crearNegocioDTO.telefonos; let i = index; trackBy: trackByIndex"
+                        class="row mb-2">
                         <div class="col">
-                            <input class="form-control" type="tel" name="telefono-{{i}}" [(ngModel)]="crearNegocioDTO.telefonos[i]" required />
+                            <input class="form-control" type="tel" name="telefono-{{i}}"
+                                [(ngModel)]="crearNegocioDTO.telefonos[i]" required />
                         </div>
                         <div class="col-auto">
-                            <button class="btn btn-danger" type="button" (click)="crearNegocioDTO.telefonos.splice(i, 1)">
+                            <button class="btn btn-danger" type="button"
+                                (click)="crearNegocioDTO.telefonos.splice(i, 1)">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </div>
                     </div>
+
                     <button class="btn btn-primary mt-2" type="button" (click)="crearNegocioDTO.telefonos.push('')">
                         <i class="fa-solid fa-circle-plus me-1"></i>Agregar teléfono
                     </button>
                 </div>
             </div>
-            
+
             <button class="btn btn-primary" type="button" (click)="crearNegocio()" [disabled]="f.invalid">
                 <i class="fa-solid fa-circle-plus me-1"></i>Crear negocio
             </button>

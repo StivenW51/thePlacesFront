@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NegociosService } from '../../Servicios/negocios.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -7,18 +7,16 @@ import { UbicacionNegocioDTO } from '../../dto/ubicacion-negocio-dto';
 import { MapaService } from '../../Servicios/mapa.service';
 import { Router, RouterModule } from '@angular/router';
 import { CrearNegocioDTO } from '../../dto/crear-negocio-dto';
-import { ThisReceiver } from '@angular/compiler';
 import { ImagenService } from '../../Servicios/imagen-service';
-
 
 @Component({
   selector: 'app-crear-negocio',
   standalone: true,
   imports: [FormsModule, CommonModule, RouterModule],
   templateUrl: './crear-negocio.component.html',
-  styleUrl: './crear-negocio.component.css'
+  styleUrls: ['./crear-negocio.component.css']
 })
-export class CrearNegocioComponent {
+export class CrearNegocioComponent implements OnInit {
   crearNegocioDTO: CrearNegocioDTO;
   horarios: Horario[];
   archivos!: FileList;
@@ -26,17 +24,25 @@ export class CrearNegocioComponent {
   marcador: any;
   dias: string[];
 
-
   constructor(private negocioService: NegociosService, 
-            private mapaService: MapaService, 
-            private router: Router,
-            private imagenService: ImagenService ) {
+              private mapaService: MapaService, 
+              private router: Router,
+              private imagenService: ImagenService) {
     this.crearNegocioDTO = new CrearNegocioDTO();
     this.horarios = [];
     this.marcador = null;
     this.tiposNegocio = [];
     this.dias = [];
     this.cargarTipoNegocio(); 
+    this.cargarDias(); // Asegúrate de llamar a cargarDias aquí
+  }
+
+  ngOnInit(): void {
+    this.mapaService.crearMapa();
+    this.mapaService.agregarMarcador().subscribe((marcador) => {
+      this.crearNegocioDTO.ubicacion.latitud = marcador.lng;
+      this.crearNegocioDTO.ubicacion.longitud = marcador.lat;
+    });
   }
 
   public crearNegocio() {
@@ -49,7 +55,6 @@ export class CrearNegocioComponent {
       next: response => {
         if (response.respuesta) {
           console.log(response);
-          
           this.router.navigate(['/gestion-negocios']).then(() => {
             window.location.reload();
           });
@@ -60,52 +65,50 @@ export class CrearNegocioComponent {
       error: error => {
         console.error(error);
       }
-  });;
-
-    console.log(this.crearNegocioDTO);
+    });
   }
 
   public agregarHorario() {
     this.horarios.push(new Horario());
   }
+  public eliminarHorario(index: number) {
+    this.horarios.splice(index, 1);
+  }
 
-
-  public onFileChange(event:any){
-    if(event.target.files.length>0){
+  public onFileChange(event: any) {
+    if (event.target.files.length > 0) {
       this.archivos = event.target.files;
 
       for (let index = 0; index < this.archivos.length; index++) {
         const file = this.archivos[index];
         
         this.imagenService.subirImagen(file).subscribe({
-        next: data => {
-          if(data != ''){
-            console.log(data);
-            this.crearNegocioDTO.imagenes[index] = data.respuesta.secure_url;
+          next: data => {
+            if (data != '') {
+              console.log(data);
+              this.crearNegocioDTO.imagenes[index] = data.respuesta.secure_url;
+            }
+          },
+          error: error => {
+            console.error(error);
           }
-        },
-        error: error =>{
-          console.error(error);
-        }
-      }) ; 
-      }          
+        });
+      }
     }
   }
 
-  ngOnInit(): void {
-    this.mapaService.crearMapa();
-    this.mapaService.agregarMarcador().subscribe((marcador) => {
-      this.crearNegocioDTO.ubicacion.latitud = marcador.lng;
-      this.crearNegocioDTO.ubicacion.longitud = marcador.lat;
-    });
-  }
-
-  private cargarTipoNegocio(){
+  private cargarTipoNegocio() {
     this.tiposNegocio = ["PANADERIA", "TIENDA", "BIBLIOTECA", "SUPERMERCADO", "CAFETERIA", "BAR", "RESTAURANTE"];
   }
 
-  private cargarDias(){
-    this.tiposNegocio = ["LUNES","MARTES","MIERCOLES","JUEVES","VIERNES","SABADO", "DOMINGO"];
+  private cargarDias() {
+    this.dias = ["LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO", "DOMINGO"];
   }
-  
+
+  // Función trackBy para ngFor
+  trackByIndex(index: number, obj: any): any {
+    return index;
 }
+}
+
+

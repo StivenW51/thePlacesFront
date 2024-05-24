@@ -18,7 +18,7 @@ export class MapaService {
       accessToken: 'pk.eyJ1IjoiZGplZG1lMjIiLCJhIjoiY2x3aWQ1cG5kMGpidzJxbXFiY2N6OGNycCJ9.RqPikbNB5qCiZV-semNdjw',
       container: 'mapa',
       style: 'mapbox://styles/mapbox/outdoors-v12',
-      center: [-75.6258, 4.4053],
+      center: [4.4053, -75.6258],
       zoom: 9
     });
     this.mapa.addControl(new mapboxgl.NavigationControl());

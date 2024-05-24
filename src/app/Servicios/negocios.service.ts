@@ -14,7 +14,8 @@ import { CrearNegocioDTO } from '../dto/crear-negocio-dto';
   providedIn: 'root'
 })
 export class NegociosService {
-  private authURL = `${this.rutas.ruta}/api/negocio`;
+ 
+  private negocioURL = `${this.rutas.ruta}/api/negocio`;
   private publicURL = `${this.rutas.ruta}/api/publico`;
   private idCliente: string = '';
 
@@ -27,7 +28,7 @@ export class NegociosService {
     const values = this.tokenService.decodePayload(myToken);
     this.idCliente = values['id']; // saca el id del cliente
 
-    return this.http.get<MensajeDTO>(`${this.authURL}/listarNegociosCliente/${this.idCliente}`).pipe(
+    return this.http.get<MensajeDTO>(`${this.negocioURL}/listarNegociosCliente/${this.idCliente}`).pipe(
       map(mensaje => mensaje.respuesta) // Ajusta esto según la estructura de MensajeDTO
     );
   }
@@ -38,10 +39,8 @@ export class NegociosService {
     );
   }
 
-  public eliminar(codigo: string): Observable<DetalleNegocioDTO[]> {
-    return this.listarNegociosCliente().pipe(
-      map(negocios => negocios.filter(n => n.id !== codigo))
-    );
+  public eliminar(codigoNegocio: string): Observable<MensajeDTO> {
+    return this.http.delete<MensajeDTO>(`${this.negocioURL}/eliminar/${codigoNegocio}`);
   }
 
   public listarNegociosPropietario(codigoCliente: string): Observable<MensajeDTO> {
@@ -49,11 +48,11 @@ export class NegociosService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${myToken}`
     });
-    return this.http.get<MensajeDTO>(`${this.authURL}/listarNegociosCliente/${codigoCliente}`, { headers });
+    return this.http.get<MensajeDTO>(`${this.negocioURL}/listarNegociosCliente/${codigoCliente}`, { headers });
   }
 
   public listarNegociosActivos(): Observable<MensajeDTO> {
-    return this.http.get<MensajeDTO>(`${this.authURL}/listar-negocios-activos-aprobados`);
+    return this.http.get<MensajeDTO>(`${this.negocioURL}/listar-negocios-activos-aprobados`);
   }
   
   public obtenerNegocio(codigoNegocio: string): Observable<MensajeDTO> {
@@ -69,9 +68,20 @@ export class NegociosService {
       'Authorization': `Bearer ${myToken}`
     });
     crearNegocioDTO.codigoCliente = this.idCliente;
-    return this.http.post<MensajeDTO>(`${this.authURL}/crear`, crearNegocioDTO, {headers}).pipe(
+    return this.http.post<MensajeDTO>(`${this.negocioURL}/crear`, crearNegocioDTO, {headers}).pipe(
       map(mensaje => mensaje.respuesta) // Ajusta esto según la estructura de MensajeDTO
     );
   }
+
+  public listarNegociosPendientes(): Observable<MensajeDTO>{
+    const myToken = this.tokenService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${myToken}`
+    });
+    return this.http.get<MensajeDTO>(`${this.negocioURL}/listarNegociosPendientes`, { headers });
+  }
+
+
+
 }
 
