@@ -33,7 +33,6 @@ export class RegistroClienteComponent {
   }
 
   public registrar() {
-
     if (this.registroClienteDTO.fotoPerfil != ""){
       console.log(this.registroClienteDTO);
       this.registroClienteDTO.favoritos = [];
@@ -49,11 +48,10 @@ export class RegistroClienteComponent {
         next: response => {
           if (response.respuesta) {
             console.log(response);
-            confirm("Cliente registrado exitosamente");
-      
+            //confirm("Cliente registrado exitosamente");
             this.router.navigate(['/login']);
           } else {
-            console.error('ok');
+            console.error(response.respuesta);
           }
         },
         error: error => {

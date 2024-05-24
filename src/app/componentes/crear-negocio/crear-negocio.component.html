@@ -56,8 +56,14 @@
                 <div class="col-sm-8">
                     <div *ngFor="let item of horarios; let i = index" class="row mb-2">
                         <div class="col">
-                            <input class="form-control" placeholder="Día" type="text" name="dia-{{i}}"
-                                [(ngModel)]="item.dia" required />
+                            <!--<input class="form-select" placeholder="Día" type="select" name="dia-{{i}}"
+                                [(ngModel)]="item.dia" required />-->
+
+                        <select name="dia-{{i}}"  class="form-select" [(ngModel)]="item.dia" required>
+                        <option value="" selected >Seleccione un dia</option>
+                        <option *ngFor="let item of dias" [value]="item">{{item}}</option>
+
+                    </select>
                         </div>
                         <div class="col">
                             <input class="form-control" placeholder="Hora Inicio" type="time" name="horaInicio-{{i}}"
@@ -80,7 +86,7 @@
                 <div class="col-sm-10">
                     <div *ngFor="let telefono of crearNegocioDTO.telefonos; let i = index" class="row mb-2">
                         <div class="col">
-                            <input class="form-control" type="text" name="telefono-{{i}}" [(ngModel)]="crearNegocioDTO.telefonos[i]" required />
+                            <input class="form-control" type="tel" name="telefono-{{i}}" [(ngModel)]="crearNegocioDTO.telefonos[i]" required />
                         </div>
                         <div class="col-auto">
                             <button class="btn btn-danger" type="button" (click)="crearNegocioDTO.telefonos.splice(i, 1)">

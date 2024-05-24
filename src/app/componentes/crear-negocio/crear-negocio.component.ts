@@ -8,6 +8,7 @@ import { MapaService } from '../../Servicios/mapa.service';
 import { Router, RouterModule } from '@angular/router';
 import { CrearNegocioDTO } from '../../dto/crear-negocio-dto';
 import { ThisReceiver } from '@angular/compiler';
+import { ImagenService } from '../../Servicios/imagen-service';
 
 
 @Component({
@@ -23,12 +24,18 @@ export class CrearNegocioComponent {
   archivos!: FileList;
   tiposNegocio: string[];
   marcador: any;
+  dias: string[];
 
-  constructor(private negocioService: NegociosService, private mapaService: MapaService, private router: Router ) {
+
+  constructor(private negocioService: NegociosService, 
+            private mapaService: MapaService, 
+            private router: Router,
+            private imagenService: ImagenService ) {
     this.crearNegocioDTO = new CrearNegocioDTO();
     this.horarios = [];
     this.marcador = null;
     this.tiposNegocio = [];
+    this.dias = [];
     this.cargarTipoNegocio(); 
   }
 
@@ -47,7 +54,7 @@ export class CrearNegocioComponent {
             window.location.reload();
           });
         } else {
-          console.error('ok');
+          console.error(response.respuesta);
         }
       },
       error: error => {
@@ -62,10 +69,26 @@ export class CrearNegocioComponent {
     this.horarios.push(new Horario());
   }
 
-  public onFileChange(event: any) {
-    if (event.target.files.length > 0) {
+
+  public onFileChange(event:any){
+    if(event.target.files.length>0){
       this.archivos = event.target.files;
-      this.crearNegocioDTO.imagenes[1] = this.archivos[0].name;
+
+      for (let index = 0; index < this.archivos.length; index++) {
+        const file = this.archivos[index];
+        
+        this.imagenService.subirImagen(file).subscribe({
+        next: data => {
+          if(data != ''){
+            console.log(data);
+            this.crearNegocioDTO.imagenes[index] = data.respuesta.secure_url;
+          }
+        },
+        error: error =>{
+          console.error(error);
+        }
+      }) ; 
+      }          
     }
   }
 
@@ -79,5 +102,9 @@ export class CrearNegocioComponent {
 
   private cargarTipoNegocio(){
     this.tiposNegocio = ["PANADERIA", "TIENDA", "BIBLIOTECA", "SUPERMERCADO", "CAFETERIA", "BAR", "RESTAURANTE"];
+  }
+
+  private cargarDias(){
+    this.tiposNegocio = ["LUNES","MARTES","MIERCOLES","JUEVES","VIERNES","SABADO", "DOMINGO"];
   }
 }
