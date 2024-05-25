@@ -96,11 +96,13 @@
     <div *ngIf="getRole() === 'MODERADOR'" class="card-footer">
       <div class="row">
         <div class="col-md-8">
-          <textarea class="form-control" placeholder="Comentario" rows="3"></textarea>
+          <input type="text" class="form-control" placeholder="Comentario" id="observacion" name="observacion"
+              rows="3" [(ngModel)]="revisaNegocioDTO.observacion">
+              
         </div>
         <div class="col-md-4">
-          <button type="button" class="btn btn-success me-2"><i class="fa-solid fa-check me-1"></i>Aceptar</button>
-          <button type="button" class="btn btn-danger"><i class="fa-solid fa-times me-1"></i>Rechazar</button>
+          <button type="button" class="btn btn-success me-2" (click)="aprobarNegocio()" ><i class="fa-solid fa-check me-1"></i>Aceptar</button>
+          <button type="button" class="btn btn-danger" (click)="rechazarNegocio()"><i class="fa-solid fa-times me-1"></i>Rechazar</button>
         </div>
       </div>
     </div>

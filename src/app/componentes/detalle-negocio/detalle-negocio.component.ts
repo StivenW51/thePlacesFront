@@ -1,33 +1,40 @@
 import { Component, OnInit } from '@angular/core';
 import { ItemNegocioDTO } from '../../dto/item-negocio-dto';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { NegociosService } from '../../Servicios/negocios.service';
 import { CommonModule } from '@angular/common';
 import { __param } from 'tslib';
 import mapboxgl from 'mapbox-gl';
 import { DetalleNegocioDTO } from '../../dto/detalle-negocio-dto';
 import { TokenService } from '../../Servicios/token.service';
+import { RevisaNegocioDTO } from '../../dto/revisa-negocio-dto';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-detalle-negocio',
   standalone: true,
-  imports: [CommonModule],
+  imports: [FormsModule, CommonModule, RouterModule],
   templateUrl: './detalle-negocio.component.html',
   styleUrl: './detalle-negocio.component.css'
 })
-export class DetalleNegocioComponent  {
+export class DetalleNegocioComponent implements OnInit {
+
 
   codigoNegocio: string = '';
+  observacion: string;
   negocio: DetalleNegocioDTO
+  revisaNegocioDTO: RevisaNegocioDTO;
 
   constructor(private route: ActivatedRoute, private negocioService: NegociosService, private tokenService: TokenService) {
     this.route.params.subscribe((params) => {
       this.codigoNegocio = params['codigo'];
     });
 
+    this.revisaNegocioDTO = new RevisaNegocioDTO();
     this.negocio = new DetalleNegocioDTO();
+    this.observacion = '';
     this.obtenerNegocio(this.codigoNegocio);
-    
+
   }
 
   public obtenerNegocio(codigoNegocio: string) {
@@ -38,17 +45,47 @@ export class DetalleNegocioComponent  {
       error: (error) => {
         console.error(error);
       }
-    }); 
+    });
   }
 
 
-  
-/*
-  ngOnInit(): void {
-    // Llamar al método pintarNegocio
-    //this.mapaService.pintarNegocio();
-    this.mapaService.pintarNegocio();
-  }*/
+  public aprobarNegocio() {
+    this.revisaNegocioDTO.estadoRegistro = 'APROBADO'
+    this.revisaNegocioDTO.idNegocio = this.negocio.id;
+
+    this.negocioService.revisarNegocio(this.revisaNegocioDTO).subscribe({
+      next: data => {
+        console.log(data.respuesta)
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+
+  public rechazarNegocio() {
+    this.revisaNegocioDTO.estadoRegistro = 'RECHAZADO'
+    this.revisaNegocioDTO.idNegocio = this.negocio.id;
+
+    this.negocioService.revisarNegocio(this.revisaNegocioDTO).subscribe({
+      next: data => {
+        console.log(data.respuesta)
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+
+
+
+
+  /*
+    ngOnInit(): void {
+      // Llamar al método pintarNegocio
+      //this.mapaService.pintarNegocio();
+      this.mapaService.pintarNegocio();
+    }*/
 
 
   ngOnInit(): void {
@@ -78,9 +115,14 @@ export class DetalleNegocioComponent  {
 
 
 
+
+
+
+
+
 }
 
 
-  
+
 
 

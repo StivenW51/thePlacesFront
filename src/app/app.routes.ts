@@ -4,6 +4,8 @@ import { InicioComponent } from './componentes/inicio/inicio.component';
 import { CategoriasComponent } from './componentes/categorias/categorias.component';
 import { LoginComponent } from './componentes/login/login.component';
 import { NegociosPendientesComponent } from './componentes/negocios-pendientes/negocios-pendientes.component';
+import { NegociosAprobadosComponent } from './componentes/negocios-aprobados/negocios-aprobados.component';
+import { NegociosRechazadosComponent } from './componentes/negocios-rechazados/negocios-rechazados.component';
 import { RegistroClienteComponent } from "./componentes/registro-cliente/RegistroClienteComponent";
 import { GestionNegociosComponent } from './componentes/gestion-negocios/gestion-negocios.component';
 import { FavoritosComponent } from './componentes/favoritos/favoritos.component';
@@ -17,6 +19,7 @@ import { RecuperarPasswordComponent } from './componentes/recuperar-password/rec
 //import { from } from 'rxjs';
 
 export const routes: Routes = [
+{ path: '', component: InicioComponent},
 { path: 'header', component: HeaderComponent},
 { path: 'inicio', component: InicioComponent },
 { path: 'categorias', component: CategoriasComponent },
@@ -25,6 +28,8 @@ export const routes: Routes = [
 { path: 'recuperar', component: RecuperarComponent },
 { path: 'recuperar-password/:token', component: RecuperarPasswordComponent  },
 { path: 'negocios-pendientes', component: NegociosPendientesComponent, canActivate: [RolesGuard], data: { expectedRole: ["MODERADOR"] } },
+{ path: 'negocios-aprobados', component: NegociosAprobadosComponent, canActivate: [RolesGuard], data: { expectedRole: ["MODERADOR"] } },
+{ path: 'negocios-rechazados', component: NegociosRechazadosComponent, canActivate: [RolesGuard], data: { expectedRole: ["MODERADOR"] } },
 { path: 'gestion-negocios', component: GestionNegociosComponent, canActivate: [RolesGuard], data: { expectedRole: ["CLIENTE"] }},
 { path: 'favoritos', component: FavoritosComponent, canActivate: [RolesGuard], data: { expectedRole: ["CLIENTE"] }},
 { path: 'crear-negocio', component: CrearNegocioComponent, canActivate: [RolesGuard], data: { expectedRole: ["CLIENTE"] }},

@@ -10,6 +10,8 @@
        <li><a routerLink="/categorias" routerLinkActive="active" class="nav-link px-2 text-white"><i class="fas fa-th-list me-2"></i>Categorias</a></li>
        
        <li *ngIf="getRole() === 'MODERADOR'"><a routerLink="/negocios-pendientes" routerLinkActive="active" class="nav-link px-2 text-white"><i class="fas fa-clock me-2"></i>Negocios Pendientes</a></li>
+       <li *ngIf="getRole() === 'MODERADOR'"><a routerLink="/negocios-aprobados" routerLinkActive="active" class="nav-link px-2 text-white"><i class="fas fa-check me-2"></i>Negocios Aprobados</a></li>
+       <li *ngIf="getRole() === 'MODERADOR'"><a routerLink="/negocios-rechazados" routerLinkActive="active" class="nav-link px-2 text-white"><i class="fas fa-times me-2"></i>Negocios Rechazados</a></li>
        
        <li *ngIf="getRole() === 'CLIENTE'"><a routerLink="/gestion-negocios" routerLinkActive="active" class="nav-link px-2 text-white"><i class="fas fa-briefcase me-2"></i>Gestion Negocios</a></li>
        <li *ngIf="getRole() === 'CLIENTE'"><a routerLink="/favoritos" routerLinkActive="active" class="nav-link px-2 text-white"><i class="fas fa-heart me-2"></i>Favoritos</a></li>

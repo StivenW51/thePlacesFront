@@ -16,15 +16,18 @@ import { TokenService } from '../../Servicios/token.service';
 })
 export class GestionNegociosComponent {
 
-  negocios: DetalleNegocioDTO[] = [];
-  seleccionados: DetalleNegocioDTO[] = [];
-  textoBtnEliminar: string = '';
-  idCliente: string = '';
+  negocios: DetalleNegocioDTO[];
+  seleccionados: DetalleNegocioDTO[];
+  textoBtnEliminar: string;
+  idCliente: string;
 
   constructor(private negocioService: NegociosService, private tokenService: TokenService) {
     this.idCliente = '';
-    this.listarNegocios();
+    this.listarNegociosPropietario();
     //this.listarNegociosActivos();
+    this.negocios = [];
+    this.seleccionados = [];
+    this.textoBtnEliminar = '';
   }
 
   public seleccionar(producto: DetalleNegocioDTO, estado: boolean) {
@@ -71,23 +74,29 @@ export class GestionNegociosComponent {
   borrarNegocios() {
     alert('Seguro que quiere eliminar su negocio?');
 
-    // Iterar sobre los códigos de negocios seleccionados y llamar al servicio para eliminar cada uno
-    this.seleccionados.forEach(negocio => {
+    for (let index = 0; index < this.seleccionados.length; index++) {
+      const negocio = this.seleccionados[index];
+      
       this.negocioService.eliminar(negocio.id).subscribe({
-        next: (data) => {
+        next: data => {
           console.log(data.respuesta);
+          //confirm(`Negocio '${negocio.nombreNegocio}' eliminado`);
         },
-        error: (error) => {
+        error: error => {
           console.error(error);
         }
       });
-    });
+    }
+
     this.seleccionados = [];
     this.actualizarMensaje();
-    window.location.reload();
+    
+    this.negocios = [];
+    this.listarNegociosPropietario();
+    //window.location.reload();
   }
 
-  public listarNegocios() {
+  public listarNegociosPropietario() {
     const values = this.tokenService.decodePayload(this.tokenService.getToken());
     this.idCliente = values.id; // saca el id del cliente
 

@@ -1,0 +1,47 @@
+<div class="card">
+    <div class="card-header ps-5 pt-4 pb-4">
+        <h5 class="mb-0"><i class="fa-solid fa-location-dot me-3"></i>Gestión de negocios pendientes</h5>
+    </div>
+    <div class="card-body p-5">
+        
+        <div class="table-responsive">
+            <table class="table table-striped table-hover table-responsive">
+                <thead>
+                    <tr>
+                        
+                        <th>Nombre</th>
+                        <th>Tipo de negocio</th>
+                        <th>Imagen</th>
+                        <th>Calificación promedio</th>
+                        <th>Estado del negocio</th>  
+                        <th>Acciones</th>                      
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    <tr *ngFor="let item of negocios; let i = index">                       
+                        <td>
+                            <p>{{item.nombreNegocio}}</p>
+                            
+                        </td>
+                        <td>
+                            <p>{{item.categoria}}</p>
+                        </td>
+                        <td>
+                            <img [src]="item.imagenes" class="img-fluid" style="max-width: 100px;">
+                        </td>
+                        <td>
+                            <p>{{item.calificacion}}</p>
+                        </td>
+                        <td>
+                            <span [ngClass]="{'text-bg-success': item.estadoNegocio == 'ACTIVO', 'text-bg-danger': item.estadoNegocio == 'INACTIVO', 'text-bg-warning': item.estadoNegocio == 'PENDIENTE' }" class="badge">{{item.estadoNegocio}}</span>
+                        </td>
+                        <td>
+                            
+                             <a routerLink="/detalle-negocio/{{item.id}}"><i class="fa-solid fa-circle-info me-2"></i>Ver detalle</a>                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

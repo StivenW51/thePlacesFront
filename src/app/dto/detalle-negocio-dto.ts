@@ -16,6 +16,8 @@ export class DetalleNegocioDTO {
         public descripcion: String = '',
         public idPropietario: string = '',
         public calificacion: Number = 0,
-        public estadoNegocio: string = ''
+        public estadoNegocio: string = '',
+        public estadoRegistro: string = '',
+        public observacion: string = ''
     ){}
 }
