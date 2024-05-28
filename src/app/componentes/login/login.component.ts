@@ -48,13 +48,14 @@ export class LoginComponent {
             });;
           }
         } else {
-          console.error('ok');
+          this.errorMessage = 'Contraseña incorrecta';
+          
         }
       },
       
       error : error => {
         console.error(error);
-        this.errorMessage = 'Contraseña incorrecta';
+        this.errorMessage = 'Contraseña incorre';
       }
 
     });

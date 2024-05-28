@@ -7,3 +7,14 @@
     color: gold;
     font-size: 1.5rem;
   }
+
+  .btn-icon {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+.btn-icon i {
+    font-size: 24px; /* Ajusta el tamaño del icono según sea necesario */
+    color: red; /* O el color que prefieras */
+}

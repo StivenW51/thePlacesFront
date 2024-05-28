@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { MapaService } from '../../Servicios/mapa.service';
 import { ClienteService } from '../../Servicios/cliente.service';
 import { FavoritoDTO } from '../../dto/favorito-dto';
+import { get } from 'http';
 
 @Component({
   selector: 'app-detalle-negocio',
@@ -33,13 +34,15 @@ export class DetalleNegocioComponent implements OnInit {
   favoritoDTO: FavoritoDTO;
   idCliente: string;
   idNegocioFavorito: string;
+  rol: string; 
 
-  constructor(private route: ActivatedRoute, 
-              private mapaService: MapaService, 
-              private negocioService: NegociosService, 
-              private tokenService: TokenService,
-              private clienteService: ClienteService) {
-    this.route.params.subscribe((params) => {
+  constructor(private route: ActivatedRoute,
+    private mapaService: MapaService,
+    private negocioService: NegociosService,
+    private tokenService: TokenService,
+    private clienteService: ClienteService) {
+   
+      this.route.params.subscribe((params) => {
       this.codigoNegocio = params['codigo'];
     });
 
@@ -53,6 +56,7 @@ export class DetalleNegocioComponent implements OnInit {
     this.idNegocioFavorito = '';
     this.listarNegociosFavoritos();
     //this.BuscarFavorito();
+    this.rol = this.getRole();
   }
 
   obtenerNegocio(codigoNegocio: string) {
@@ -96,52 +100,70 @@ export class DetalleNegocioComponent implements OnInit {
     });
   }
 
-
-  public listarNegociosFavoritos() {        
-    this.clienteService.listarNegociosFavoritos().subscribe({
-      next: (data) => {
-        this.favoritos = data.respuesta;  
-        console.log(this.favoritos) 
-        this.BuscarFavorito();     
-      },
-      error: (error) => {
-        console.error(error);
+  public isLogged(){
+    if (this.tokenService.isLogged()) {
+      if(this.rol === 'CLIENTE'){
+        return 'si'
       }
-    });
+      else{
+        return 'no'
+      }      
+    }
+    else{
+      return 'no'
+    }
+  }
+
+  public listarNegociosFavoritos() {
+    if (this.tokenService.isLogged()) {
+      this.clienteService.listarNegociosFavoritos().subscribe({
+        next: (data) => {
+          this.favoritos = data.respuesta;
+          console.log(this.favoritos)
+          this.BuscarFavorito();
+        },
+        error: (error) => {
+          console.error(error);
+        }
+      });
+    }
+    else{
+      this.idNegocioFavorito = '';
+    }
   }
 
   public BuscarFavorito() {
     this.idNegocioFavorito = '';
     for (let index = 0; index < this.favoritos.length; index++) {
-      if(this.favoritos[index].id === this.codigoNegocio){
+      if (this.favoritos[index].id === this.codigoNegocio) {
         this.idNegocioFavorito = this.codigoNegocio;
-      }        
+      }
     }
 
     console.log(this.favoritos);
     console.log(this.idNegocioFavorito);
   }
 
-  public isFavorito(): string{   
-    if(this.idNegocioFavorito !== ''){
+  public isFavorito(): string {
+    if (this.idNegocioFavorito !== '') {
       return 'si';
     }
-    else if(this.idNegocioFavorito === ''){
+    else if (this.idNegocioFavorito === '') {
       return 'no';
     }
-    else{
+    else {
       return '';
     }
   }
 
-  public agregarFavorito(){
+  public agregarFavorito() {
     this.favoritoDTO.idCliente = this.negocio.idPropietario;
     this.favoritoDTO.idNegocio = this.negocio.id;
 
     this.clienteService.AgregarFavorito(this.favoritoDTO).subscribe({
-      next: (data) => {        
-        console.log(data)  
-        this.idNegocioFavorito = this.negocio.id;   
+      next: (data) => {
+        console.log(data)
+        this.idNegocioFavorito = this.negocio.id;
       },
       error: (error) => {
         console.error(error);
@@ -149,13 +171,13 @@ export class DetalleNegocioComponent implements OnInit {
     });
   }
 
-  public eliminarFavorito(){
+  public eliminarFavorito() {
     this.favoritoDTO.idCliente = this.negocio.idPropietario;
     this.favoritoDTO.idNegocio = this.negocio.id;
 
     this.clienteService.QuitarFavorito(this.favoritoDTO).subscribe({
-      next: (data) => {        
-        console.log(data)  
+      next: (data) => {
+        console.log(data)
         this.idNegocioFavorito = '';
       },
       error: (error) => {
