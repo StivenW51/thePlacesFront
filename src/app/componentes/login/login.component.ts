@@ -40,7 +40,7 @@ export class LoginComponent {
           if (this.tokenService.getRole() == "CLIENTE") {
             this.router.navigate(['/gestion-negocios']).then(() => {
               window.location.reload();
-            });;
+            });
           }
           else if(this.tokenService.getRole() == "MODERADOR"){
             this.router.navigate(['/negocios-pendientes']).then(() => {

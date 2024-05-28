@@ -6,6 +6,7 @@ import { MensajeDTO } from '../dto/mensaje-dto';
 import { RutasService } from './rutas.service';
 import { TokenService } from './token.service';
 import { RecuperacionPasswordDTO } from '../dto/recuperacion-password-dto';
+import { FavoritoDTO } from '../dto/favorito-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class ClienteService {
 
   private publicURL = `${this.rutas.ruta}/api/publico`;
   private clienteURL = `${this.rutas.ruta}/api/cliente`;
+  private idCliente: string = '';
 
   constructor(private http: HttpClient,
     private tokenService: TokenService,
@@ -23,12 +25,29 @@ export class ClienteService {
     return this.http.post<MensajeDTO>(`${this.publicURL}/registrar`, registroClienteDTO);
   }
 
-  public listarNegociosFavoritos(codigoCliente: string): Observable<MensajeDTO> {
+  public listarNegociosFavoritos(): Observable<MensajeDTO> {
+    const myToken = this.tokenService.getToken();
+    const values = this.tokenService.decodePayload(myToken);
+    this.idCliente = values['id']; // saca el id del cliente
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${myToken}`
+    });
+    return this.http.get<MensajeDTO>(`${this.clienteURL}/favoritos/${this.idCliente}`, { headers });
+  }
+
+  public AgregarFavorito(favoritoDTO: FavoritoDTO): Observable<MensajeDTO> {
     const myToken = this.tokenService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${myToken}`
     });
-    return this.http.get<MensajeDTO>(`${this.clienteURL}/favoritos/${codigoCliente}`, { headers });
+    return this.http.post<MensajeDTO>(`${this.clienteURL}/agregarfavorito`, favoritoDTO, { headers });
   }
 
+  public QuitarFavorito(favoritoDTO: FavoritoDTO): Observable<MensajeDTO> {
+    const myToken = this.tokenService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${myToken}`
+    });
+    return this.http.post<MensajeDTO>(`${this.clienteURL}/quitarFavorito`, favoritoDTO, { headers });
+  }
 }

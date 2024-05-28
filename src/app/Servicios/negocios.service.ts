@@ -61,6 +61,8 @@ export class NegociosService {
     return this.http.get<MensajeDTO>(`${this.negocioURL}/listarNegociosCliente/${codigoCliente}`, { headers });
   }
 
+  
+
   public listarNegociosActivos(): Observable<MensajeDTO> {
     return this.http.get<MensajeDTO>(`${this.publicURL}/listar-negocios-activos-aprobados`);
   }
