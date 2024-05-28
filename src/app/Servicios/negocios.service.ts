@@ -16,6 +16,8 @@ import { NegocioRechazadoDto } from '../dto/negocio-rechazado-dto';
   providedIn: 'root'
 })
 export class NegociosService {
+
+
  
   private negocioURL = `${this.rutas.ruta}/api/negocio`;
   private publicURL = `${this.rutas.ruta}/api/publico`;
@@ -116,6 +118,14 @@ export class NegociosService {
     return this.http.post<MensajeDTO>(`${this.modURL}/revisar-negocio`, revisaNegocioDTO, {headers}).pipe(
       map(mensaje => mensaje.respuesta) // Ajusta esto según la estructura de MensajeDTO
     );
+  }
+
+
+  buscar(texto: string) {
+    // Aquí colocarías la lógica para buscar negocios
+    // Por ejemplo, podrías hacer una solicitud HTTP a un backend para obtener los resultados de la búsqueda
+    // O podrías buscar en una lista de negocios preexistente
+    // Esta función debe retornar los resultados de la búsqueda
   }
 
 

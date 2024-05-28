@@ -28,6 +28,7 @@ export class DetalleNegocioComponent implements OnInit {
   map: any;
   longitud: number = 0;
   latitud: number = 0;
+ 
 
   constructor(private route: ActivatedRoute, private mapaService: MapaService, private negocioService: NegociosService, private tokenService: TokenService) {
     this.route.params.subscribe((params) => {
@@ -39,6 +40,7 @@ export class DetalleNegocioComponent implements OnInit {
     this.observacion = '';
     this.obtenerNegocio(this.codigoNegocio);
   }
+  
 
    obtenerNegocio(codigoNegocio: string){
     this.negocioService.obtenerNegocio(codigoNegocio).subscribe({
@@ -156,6 +158,8 @@ export class DetalleNegocioComponent implements OnInit {
       
   }
 
+
+ 
 }
 
 

@@ -3,6 +3,8 @@ import { MapaService } from '../../Servicios/mapa.service';
 import { NegociosService } from '../../Servicios/negocios.service';
 import { DetalleNegocioDTO } from '../../dto/detalle-negocio-dto';
 import { Ubicacion } from '../../entidades/ubicacion';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-inicio',
@@ -14,23 +16,25 @@ import { Ubicacion } from '../../entidades/ubicacion';
 export class InicioComponent implements OnInit {
 
   negocios: DetalleNegocioDTO[];
- 
+  textoBusqueda: string = '';
 
-  constructor(private mapaService: MapaService, 
-              private negocioService: NegociosService) { 
 
-      this.negocios = [];      
+  constructor(private mapaService: MapaService,
+    private negocioService: NegociosService, private router: Router) {
+
+    this.negocios = [];
   }
-  
+
   ngOnInit(): void {
-    this.listarNegociosActivos();
-    this.mapaService.obtenerNegocios(this.negocios);
     this.mapaService.crearMapa();
+    this.listarNegociosActivos();
+    //this.mapaService.obtenerNegocios(this.negocios);
+    
   }
 
-  private mostrarNegociosMapa(){
+ /* private mostrarNegociosMapa() {
     this.mapaService.pintarMarcadores();
-  }
+  }*/
 
   public listarNegociosActivos() {
     this.negocioService.listarNegociosActivos().subscribe({
@@ -42,6 +46,14 @@ export class InicioComponent implements OnInit {
       }
     });
   }
+
+  public iraBusqueda(valor: string) {
+    if (valor) {
+      this.router.navigate(["/busqueda", valor]);
+    }
+  }
+
+
 
 
 }

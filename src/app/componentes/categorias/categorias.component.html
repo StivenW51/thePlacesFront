@@ -21,7 +21,7 @@
         <div class="container">
           <div class="row">
             <div class="col-md-4 mb-4" *ngFor="let negocio of negociosFiltrados">
-              <a routerLink="/detalle-negocio/{{negocio.id}}" style="text-decoration: none;">
+              <a routerLink="/detalle-negocio/{{negocio.id}}/{{negocio.ubicacion.latitud}}/{{negocio.ubicacion.longitud}}" style="text-decoration: none;">
                 <div class="card">
                   <img [src]="negocio.imagenes[0]" class="card-img-top card-img-top-custom" [alt]="negocio.nombreNegocio" [title]="negocio.nombreNegocio">
                   <div class="card-body">

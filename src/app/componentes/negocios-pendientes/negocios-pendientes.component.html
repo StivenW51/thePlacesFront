@@ -37,7 +37,7 @@
                             <span [ngClass]="{'text-bg-success': item.estadoNegocio == 'ACTIVO', 'text-bg-danger': item.estadoNegocio == 'INACTIVO', 'text-bg-warning': item.estadoNegocio == 'PENDIENTE' }" class="badge">{{item.estadoNegocio}}</span>
                         </td>
                         <td>
-                             <a routerLink="/detalle-negocio/{{item.id}}"><i class="fa-solid fa-circle-info me-2"></i>Ver detalle</a>                            
+                             <a routerLink="/detalle-negocio/{{item.id}}/{{item.ubicacion.latitud}}/{{item.ubicacion.longitud}}"><i class="fa-solid fa-circle-info me-2"></i>Ver detalle</a>                            
                         </td>
                     </tr>
                 </tbody>

@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { HeaderComponent } from './componentes/header/header.component';
+import { BusquedaComponent } from './componentes/busqueda/busqueda.component';
 import { InicioComponent } from './componentes/inicio/inicio.component';
 import { CategoriasComponent } from './componentes/categorias/categorias.component';
 import { LoginComponent } from './componentes/login/login.component';
@@ -22,6 +23,7 @@ export const routes: Routes = [
 { path: '', component: InicioComponent},
 { path: 'header', component: HeaderComponent},
 { path: 'inicio', component: InicioComponent },
+{ path: "busqueda/:texto", component: BusquedaComponent },
 { path: 'categorias', component: CategoriasComponent },
 { path: 'login', component: LoginComponent },
 { path: 'registro-cliente', component: RegistroClienteComponent },
