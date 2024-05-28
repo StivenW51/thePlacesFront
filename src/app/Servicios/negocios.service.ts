@@ -59,7 +59,7 @@ export class NegociosService {
   }
 
   public listarNegociosActivos(): Observable<MensajeDTO> {
-    return this.http.get<MensajeDTO>(`${this.negocioURL}/listar-negocios-activos-aprobados`);
+    return this.http.get<MensajeDTO>(`${this.publicURL}/listar-negocios-activos-aprobados`);
   }
   
   public obtenerNegocio(codigoNegocio: string): Observable<MensajeDTO> {

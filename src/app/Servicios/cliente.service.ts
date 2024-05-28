@@ -13,14 +13,14 @@ import { RecuperacionPasswordDTO } from '../dto/recuperacion-password-dto';
 export class ClienteService {
 
   private publicURL = `${this.rutas.ruta}/api/publico`;
-  private clienteURL = `${this.rutas.ruta}/api/publico`;
+  private clienteURL = `${this.rutas.ruta}/api/cliente`;
 
   constructor(private http: HttpClient,
     private tokenService: TokenService,
     private rutas: RutasService) { }
 
   public registrarCliente(registroClienteDTO: RegistroClienteDTO): Observable<MensajeDTO> {
-    return this.http.post<MensajeDTO>(`${this.publicURL}/registrar`, registroClienteDTO)
+    return this.http.post<MensajeDTO>(`${this.publicURL}/registrar`, registroClienteDTO);
   }
 
   public listarNegociosFavoritos(codigoCliente: string): Observable<MensajeDTO> {

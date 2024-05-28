@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DetalleNegocioDTO } from '../../dto/detalle-negocio-dto';
+import { NegociosService } from '../../Servicios/negocios.service';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-categorias',
   standalone: true,
-  imports: [CommonModule],
+  imports: [FormsModule, CommonModule, RouterModule],
   templateUrl: './categorias.component.html',
   styleUrls: ['./categorias.component.css']
 })
@@ -68,19 +71,32 @@ export class CategoriasComponent {
 
   categorias: string[]; 
   negocios: DetalleNegocioDTO[];
-  negociosFiltrados = this.negocios.filter(negocio => negocio.categoria === this.categorias[0]);
+  negociosFiltrados: DetalleNegocioDTO[];
   
-  constructor() {
+  constructor(private negocioService: NegociosService) {
 
     this.categorias = ['PANADERIA', 'TIENDA', 'BIBLIOTECA', 'SUPERMERCADO', 'CAFETERIA', 'BAR', 'RESTAURANTE'];
     this.negocios = [];
-    
-    
+    this.listarNegociosActivos();
+    this.negociosFiltrados = this.negocios.filter(negocio => negocio.categoria === this.categorias[0]);    
   }
 
 
   seleccionarCategoria(categoria: string) {
     this.negociosFiltrados = this.negocios.filter(negocio => negocio.categoria === categoria);
   }
+
+  public listarNegociosActivos() {
+    this.negocioService.listarNegociosActivos().subscribe({
+      next: (data) => {
+        this.negocios = data.respuesta;
+        console.log(this.negocios)
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+
 }
 
