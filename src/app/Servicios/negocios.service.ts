@@ -11,6 +11,7 @@ import { RegistroNegocioDTO } from '../dto/registro-negocio-dto';
 import { CrearNegocioDTO } from '../dto/crear-negocio-dto';
 import { RevisaNegocioDTO } from '../dto/revisa-negocio-dto';
 import { NegocioRechazadoDto } from '../dto/negocio-rechazado-dto';
+import { EditarNegocioDTO } from '../dto/editar-negocio-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -77,6 +78,17 @@ export class NegociosService {
     });
     crearNegocioDTO.codigoCliente = this.idCliente;
     return this.http.post<MensajeDTO>(`${this.negocioURL}/crear`, crearNegocioDTO, {headers}).pipe(
+      map(mensaje => mensaje.respuesta) // Ajusta esto según la estructura de MensajeDTO
+    );
+  }
+
+  public editarNegocio(editarNegocioDTO: EditarNegocioDTO): Observable<MensajeDTO> {
+    const myToken = this.tokenService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${myToken}`
+    });
+
+    return this.http.put<MensajeDTO>(`${this.negocioURL}/editar`, editarNegocioDTO, {headers}).pipe(
       map(mensaje => mensaje.respuesta) // Ajusta esto según la estructura de MensajeDTO
     );
   }

@@ -10,14 +10,15 @@ export class DetalleNegocioDTO {
         public direccion: string = '',
         public horario: HorarioNegocioDTO[] = [],
         public ubicacion: UbicacionNegocioDTO = new UbicacionNegocioDTO(),
-        public categoria: String = '',
-        public imagenes: String[] = [],
-        public telefonos: String[] = [],
-        public descripcion: String = '',
+        public categoria: string = '',
+        public imagenes: string[] = [],
+        public telefonos: string[] = [],
+        public descripcion: string = '',
         public idPropietario: string = '',
-        public calificacion: Number = 0,
+        public calificacion: number = 0,
         public estadoNegocio: string = '',
         public estadoRegistro: string = '',
-        public observacion: string = ''
+        public observacion: string = '',
+        public idModerador: string = ''
     ){}
 }

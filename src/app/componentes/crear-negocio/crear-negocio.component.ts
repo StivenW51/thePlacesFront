@@ -35,7 +35,8 @@ export class CrearNegocioComponent implements OnInit {
     this.tiposNegocio = [];
     this.dias = [];
     this.cargarTipoNegocio(); 
-    this.cargarDias(); // Asegúrate de llamar a cargarDias aquí
+    this.cargarDias(); 
+    
   }
 
   ngOnInit(): void {
