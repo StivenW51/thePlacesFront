@@ -18,15 +18,12 @@
           <h4>Negocios Disponibles</h4>
         </div>
         <!-- Tarjeta de negocio -->
-        <div class="col-md-12" *ngFor="let negocio of negociosFiltrados">
-          <a routerLink="/detalle-negocio/{{negocio.id}}" style="text-decoration: none;">
-            <div class="card mb-3" style="max-width: 540px;">
-              <div class="row no-gutters">
-                <div class="col-md-4">
-                  <img [src]="negocio.imagenes[0]" class="card-img" [alt]="negocio.nombreNegocio"
-                    [title]="negocio.nombreNegocio" width="250px" height="250px">
-                </div>
-                <div class="col-md-8">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4 mb-4" *ngFor="let negocio of negociosFiltrados">
+              <a routerLink="/detalle-negocio/{{negocio.id}}" style="text-decoration: none;">
+                <div class="card">
+                  <img [src]="negocio.imagenes[0]" class="card-img-top card-img-top-custom" [alt]="negocio.nombreNegocio" [title]="negocio.nombreNegocio">
                   <div class="card-body">
                     <h5 class="card-title">{{ negocio.nombreNegocio }}</h5>
                     <p class="card-text">{{ negocio.descripcion }}</p>
@@ -35,10 +32,13 @@
                     <p class="card-text"><small class="text-muted">Calificación: {{ negocio.calificacion }}</small></p>
                   </div>
                 </div>
-              </div>
+              </a>
             </div>
-          </a>
+          </div>
         </div>
+        
+                
+        
         <!-- Repite las tarjetas según sea necesario -->
       </div>
     </div>

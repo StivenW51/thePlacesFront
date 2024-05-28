@@ -29,6 +29,7 @@ export class CrearNegocioComponent implements OnInit {
               private router: Router,
               private imagenService: ImagenService) {
     this.crearNegocioDTO = new CrearNegocioDTO();
+    this.crearNegocioDTO.ubicacion = new UbicacionNegocioDTO(); // Asegúrate de inicializar la ubicación
     this.horarios = [];
     this.marcador = null;
     this.tiposNegocio = [];
@@ -40,8 +41,9 @@ export class CrearNegocioComponent implements OnInit {
   ngOnInit(): void {
     this.mapaService.crearMapa();
     this.mapaService.agregarMarcador().subscribe((marcador) => {
-      this.crearNegocioDTO.ubicacion.latitud = marcador.lng;
-      this.crearNegocioDTO.ubicacion.longitud = marcador.lat;
+      this.crearNegocioDTO.ubicacion.latitud = marcador.lat;
+      this.crearNegocioDTO.ubicacion.longitud = marcador.lng;
+      console.log(`Latitud: ${this.crearNegocioDTO.ubicacion.latitud}, Longitud: ${this.crearNegocioDTO.ubicacion.longitud}`);
     });
   }
 
@@ -51,6 +53,9 @@ export class CrearNegocioComponent implements OnInit {
     this.crearNegocioDTO.estadoRegistro = 'PENDIENTE';
     this.crearNegocioDTO.idModerador = '';
 
+    // Verificar las coordenadas antes de enviar la solicitud
+    console.log(`Creando negocio con latitud: ${this.crearNegocioDTO.ubicacion.latitud}, longitud: ${this.crearNegocioDTO.ubicacion.longitud}`);
+    
     this.negocioService.crearNegocio(this.crearNegocioDTO).subscribe({
       next: response => {
         if (response.respuesta) {
@@ -108,7 +113,8 @@ export class CrearNegocioComponent implements OnInit {
   // Función trackBy para ngFor
   trackByIndex(index: number, obj: any): any {
     return index;
+  }
 }
-}
+
 
 

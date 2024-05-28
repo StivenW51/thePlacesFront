@@ -33,7 +33,7 @@ export const routes: Routes = [
 { path: 'gestion-negocios', component: GestionNegociosComponent, canActivate: [RolesGuard], data: { expectedRole: ["CLIENTE"] }},
 { path: 'favoritos', component: FavoritosComponent, canActivate: [RolesGuard], data: { expectedRole: ["CLIENTE"] }},
 { path: 'crear-negocio', component: CrearNegocioComponent, canActivate: [RolesGuard], data: { expectedRole: ["CLIENTE"] }},
-{ path: 'detalle-negocio/:codigo', component: DetalleNegocioComponent},
+{ path: 'detalle-negocio/:codigo/:latitud/:longitud', component: DetalleNegocioComponent},
 { path: 'editar-negocio/:codigo', component: EditarNegocioComponent},
 { path: "**", pathMatch: "full", redirectTo: "" },
 { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },

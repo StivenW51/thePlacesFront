@@ -1,0 +1,7 @@
+.card-img-top-custom {
+    max-width: 250px;
+    max-height: 250px;
+    
+    object-fit: cover; /* Esto asegura que la imagen mantenga su relación de aspecto */
+  }
+  
