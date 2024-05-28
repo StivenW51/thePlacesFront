@@ -54,7 +54,8 @@
                                 class="badge">{{item.estadoRegistro}}</span>
                         </td>
                         <td>
-                            <a routerLink="/detalle-negocio/{{item.id}}/{{item.ubicacion.latitud}}/{{item.ubicacion.longitud}}"><i class="fa-solid fa-circle-info me-2"></i>Ver detalle</a>
+                            <a routerLink="/detalle-negocio/{{item.id}}/{{item.ubicacion.latitud}}/{{item.ubicacion.longitud}}" title="Ver Detalle"><i class="fa-solid fa-eye me-2"></i></a>
+                            <a routerLink="/editar-negocio/{{item.id}}" title="Editar"><i class="fa-solid fa-pencil me-2"></i></a>
                         </td>
                     </tr>
                     }
