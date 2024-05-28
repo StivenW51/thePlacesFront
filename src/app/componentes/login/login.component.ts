@@ -4,9 +4,7 @@ import { InicioSesionDTO } from '../../dto/inicio-sesion-dto';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../Servicios/auth.service';
-import { HttpClient } from '@angular/common/http';
 import { TokenService } from '../../Servicios/token.service';
-import { routes } from '../../app.routes';
 
 
 @Component({

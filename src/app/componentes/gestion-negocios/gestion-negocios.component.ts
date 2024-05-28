@@ -51,26 +51,6 @@ export class GestionNegociosComponent {
     }
   }
 
-  // public borrarNegocios() {
-  //   alert('Seguro que quiere eliminar su negocio?');
-
-  //   this.seleccionados.forEach((negocio: DetalleNegocioDTO) => {
-  //     this.negocioService.eliminar(negocio.id).subscribe({
-  //         next: (data) => {
-  //           console.log(data.respuesta);
-  //         },
-  //         error: (error) => {
-  //           console.error(error);
-  //         }
-  //       });  
-  //       //this.negocios = this.negocios.filter(negocio => negocio.id !== n.id);      
-  //     });
-    
-  //   this.seleccionados = [];
-  //   this.actualizarMensaje();
-  //   window.location.reload();
-  // }
-
   borrarNegocios() {
     alert('Seguro que quiere eliminar su negocio?');
 

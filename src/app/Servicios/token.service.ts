@@ -47,9 +47,16 @@ export class TokenService {
 
   public decodePayload(token: string | null): any {
     const payload = token!.split(".")[1];
-    const payloadDecoded = Buffer.from(payload, 'base64').toString('ascii');
-    const values = JSON.parse(payloadDecoded);
-    return values;
+    
+    if(payload !== null){
+      const payloadDecoded = Buffer.from(payload, 'base64').toString('ascii');
+      const values = JSON.parse(payloadDecoded);
+      return values;
+    }
+    else{
+      return null;
+    }
+        
   }
 
   public getEmail(): string {

@@ -5,33 +5,30 @@ import { Observable } from 'rxjs';
 import { MensajeDTO } from '../dto/mensaje-dto';
 import { RutasService } from './rutas.service';
 import { TokenService } from './token.service';
+import { RecuperacionPasswordDTO } from '../dto/recuperacion-password-dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClienteService {
 
-  private authURL =  `${this.rutas.ruta}/api/publico`;
+  private publicURL = `${this.rutas.ruta}/api/publico`;
+  private clienteURL = `${this.rutas.ruta}/api/publico`;
 
-  constructor(private http: HttpClient, 
-    private tokenService: TokenService, 
-    private rutas: RutasService) {}
+  constructor(private http: HttpClient,
+    private tokenService: TokenService,
+    private rutas: RutasService) { }
 
   public registrarCliente(registroClienteDTO: RegistroClienteDTO): Observable<MensajeDTO> {
-    //return this.http.post<MensajeDTO>(`${this.authURL}/registrar`, registroClienteDTO);
-    return this.http.post<MensajeDTO>(`${this.authURL}/registrar`, registroClienteDTO)
+    return this.http.post<MensajeDTO>(`${this.publicURL}/registrar`, registroClienteDTO)
   }
-
-  /*public login(inicioSesionDTO: InicioSesionDTO): Observable<MensajeDTO> {
-    return this.http.post<MensajeDTO>(`${this.authURL}/login`, inicioSesionDTO);
-  }*/
 
   public listarNegociosFavoritos(codigoCliente: string): Observable<MensajeDTO> {
     const myToken = this.tokenService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${myToken}`
     });
-    return this.http.get<MensajeDTO>(`${this.authURL}/favoritos/${codigoCliente}`, { headers });
+    return this.http.get<MensajeDTO>(`${this.clienteURL}/favoritos/${codigoCliente}`, { headers });
   }
 
 }
